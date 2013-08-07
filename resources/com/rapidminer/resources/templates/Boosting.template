@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<process version="5.0">
+  <context>
+    <input/>
+    <output/>
+    <macros/>
+  </context>
+  <operator activated="true" class="process" expanded="true" name="Root">
+    <description>In this process the boosting method AdaBoost with a decision tree base learner. Since the data set contains missing values, we have to apply a preprocessing operator which replaces these missing values by the average of the non-missing values in the corresponding columns.</description>
+    <parameter key="logverbosity" value="3"/>
+    <parameter key="random_seed" value="2001"/>
+    <parameter key="send_mail" value="1"/>
+    <parameter key="process_duration_for_mail" value="30"/>
+    <parameter key="encoding" value="SYSTEM"/>
+    <process expanded="true" height="584" width="918">
+      <operator activated="true" class="retrieve" expanded="true" height="60" name="Retrieve" width="90" x="45" y="30"/>
+      <operator activated="true" class="adaboost" expanded="true" height="76" name="AdaBoost" width="90" x="313" y="30">
+        <parameter key="iterations" value="10"/>
+        <process expanded="true" height="534" width="771">
+          <operator activated="true" class="decision_stump" expanded="true" height="76" name="DecisionStump" width="90" x="112" y="30">
+            <parameter key="criterion" value="gain_ratio"/>
+            <parameter key="minimal_size_for_split" value="4"/>
+            <parameter key="minimal_leaf_size" value="1"/>
+            <parameter key="minimal_gain" value="0.1"/>
+          </operator>
+          <connect from_port="training set" to_op="DecisionStump" to_port="training set"/>
+          <connect from_op="DecisionStump" from_port="model" to_port="model"/>
+          <portSpacing port="source_training set" spacing="0"/>
+          <portSpacing port="sink_model" spacing="0"/>
+        </process>
+      </operator>
+      <connect from_op="Retrieve" from_port="output" to_op="AdaBoost" to_port="training set"/>
+      <connect from_op="AdaBoost" from_port="model" to_port="result 1"/>
+      <portSpacing port="source_input 1" spacing="0"/>
+      <portSpacing port="sink_result 1" spacing="0"/>
+      <portSpacing port="sink_result 2" spacing="0"/>
+    </process>
+  </operator>
+  <title>Boosting</title>
+  <description>Boosts a decision stump model.</description>
+  <template-group>Meta Learning</template-group>
+  <template-parameters>
+    <template-parameter>
+      <operator>AdaBoost</operator>
+      <parameter>iterations</parameter>
+    </template-parameter>
+    <template-parameter>
+      <operator>Retrieve</operator>
+      <parameter>repository_entry</parameter>
+    </template-parameter>
+  </template-parameters>
+</process>

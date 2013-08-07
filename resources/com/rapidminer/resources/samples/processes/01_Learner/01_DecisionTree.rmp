@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<process version="5.1.003">
+  <context>
+    <input/>
+    <output/>
+    <macros/>
+  </context>
+  <operator activated="true" class="process" compatibility="5.0.000" expanded="true" name="Root">
+    <description>&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;p&gt;This process starts with loading the data. After finishing the input operator a typical learning step is performed. Here, an implementation of a decision tree learner is used which also can handle numerical values (similar to the well known C4.5 algorithm).&lt;/p&gt;&lt;/td&gt;&lt;td&gt;&lt;icon&gt;groups/24/learner&lt;/icon&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;Each operator may demand some input and delivers some output. These in- and output types are passed between the operators. In this example the first operator &amp;quot;Input&amp;quot; does not demand input and delivers an example set as output. This example set is consumed by the learner which delivers the final output: the learned model. &lt;/p&gt;&lt;p&gt;Since this is a linear data flow such a process design is called &amp;quot;operator chain&amp;quot;. Later we will see more sophisticated processes in the form of operator trees.&lt;/p&gt;&lt;p&gt;Try the following:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Press the &amp;quot;Play&amp;quot; icon in the icon bar at the top of the frame. The process should start and after a short time the message viewer in the bottom part of the frame shows the message that the process was successfully finished. The main frame changes to &amp;quot;Result&amp;quot; view which shows the learned decision tree (a hypothesis which is called Model in RapidMiner). &lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;icon&gt;24/media_play&lt;/icon&gt;&lt;/td&gt;&lt;td&gt;&lt;i&gt;&amp;quot;Play&amp;quot; button to start the process&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/li&gt;&lt;li&gt;Change back to the edit mode (either via the View menu entry, via the icon in the upper right corner, or via the shortcut F9).  Replace the learner by another learning scheme for classification tasks (right click on decision tree learner and replace operator). You can use the RuleLearner for example. After running the changed process the new model is presented.&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;icon&gt;groups/24/learner&lt;/icon&gt;&lt;/td&gt;&lt;td&gt;&lt;i&gt;Replace the decision tree learner by a RuleLearner.&lt;/i&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/li&gt;&lt;/ul&gt;</description>
+    <parameter key="logverbosity" value="3"/>
+    <parameter key="random_seed" value="2001"/>
+    <parameter key="send_mail" value="1"/>
+    <parameter key="process_duration_for_mail" value="30"/>
+    <parameter key="encoding" value="SYSTEM"/>
+    <process expanded="true" height="584" width="300">
+      <operator activated="true" class="retrieve" compatibility="5.0.000" expanded="true" height="60" name="Retrieve" width="90" x="45" y="30">
+        <parameter key="repository_entry" value="../../data/Golf"/>
+      </operator>
+      <operator activated="true" class="decision_tree" compatibility="5.0.000" expanded="true" height="76" name="DecisionTree" width="90" x="179" y="30">
+        <parameter key="criterion" value="gain_ratio"/>
+        <parameter key="minimal_size_for_split" value="4"/>
+        <parameter key="minimal_leaf_size" value="2"/>
+        <parameter key="minimal_gain" value="0.1"/>
+        <parameter key="maximal_depth" value="20"/>
+        <parameter key="confidence" value="0.25"/>
+        <parameter key="number_of_prepruning_alternatives" value="3"/>
+        <parameter key="no_pre_pruning" value="false"/>
+        <parameter key="no_pruning" value="false"/>
+      </operator>
+      <connect from_op="Retrieve" from_port="output" to_op="DecisionTree" to_port="training set"/>
+      <connect from_op="DecisionTree" from_port="model" to_port="result 1"/>
+      <portSpacing port="source_input 1" spacing="0"/>
+      <portSpacing port="sink_result 1" spacing="0"/>
+      <portSpacing port="sink_result 2" spacing="0"/>
+    </process>
+  </operator>
+</process>

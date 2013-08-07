@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<process version="5.0">
+  <context>
+    <input/>
+    <output/>
+    <macros/>
+  </context>
+  <operator activated="true" class="process" expanded="true" name="Process">
+    <parameter key="logverbosity" value="3"/>
+    <parameter key="random_seed" value="2001"/>
+    <parameter key="send_mail" value="1"/>
+    <parameter key="process_duration_for_mail" value="30"/>
+    <parameter key="encoding" value="SYSTEM"/>
+    <process expanded="true" height="566" width="894">
+      <operator activated="true" class="retrieve" expanded="true" height="60" name="Retrieve" width="90" x="45" y="30">
+        <parameter key="repository_entry" value="../../data/Iris"/>
+      </operator>
+      <operator activated="true" class="normalize" expanded="true" height="94" name="Normalize" width="90" x="179" y="30">
+        <parameter key="return_preprocessing_model" value="false"/>
+        <parameter key="create_view" value="false"/>
+        <parameter key="attribute_filter_type" value="0"/>
+        <parameter key="attribute" value=""/>
+        <parameter key="use_except_expression" value="false"/>
+        <parameter key="value_type" value="0"/>
+        <parameter key="use_value_type_exception" value="false"/>
+        <parameter key="except_value_type" value="2"/>
+        <parameter key="block_type" value="0"/>
+        <parameter key="use_block_type_exception" value="false"/>
+        <parameter key="except_block_type" value="2"/>
+        <parameter key="invert_selection" value="false"/>
+        <parameter key="include_special_attributes" value="false"/>
+        <parameter key="method" value="0"/>
+        <parameter key="min" value="0.0"/>
+        <parameter key="max" value="1.0"/>
+      </operator>
+      <connect from_op="Retrieve" from_port="output" to_op="Normalize" to_port="example set input"/>
+      <connect from_op="Normalize" from_port="example set output" to_port="result 1"/>
+      <portSpacing port="source_input 1" spacing="0"/>
+      <portSpacing port="sink_result 1" spacing="0"/>
+      <portSpacing port="sink_result 2" spacing="0"/>
+    </process>
+  </operator>
+</process>

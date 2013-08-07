@@ -1,0 +1,4 @@
+Changes from RapidMiner 5.3.5 to 5.3.6
+--------------------------------------
+* BUGFIX: NPE in CrossDistanceOperator for nominal attributes
+* BUGFIX: In the Rename operator the check for existing attribute names will not check the role name

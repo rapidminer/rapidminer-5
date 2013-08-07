@@ -1,0 +1,35 @@
+|
+| Voting records drawn from the Congressional Quarterly Almanac, 98th
+| Congress, 2nd session 1984, Volume XL: Congressional Quarterly Inc.
+| Washington, D.C., 1985.
+|
+| This data set includes votes for each of the U.S. House of
+| Representatives Congressmen on the 16 key votes identified by the
+| CQA.  The CQA lists nine different types of votes: voted for, paired
+| for, and announced for (these three simplified to yea), voted
+| against, paired against, and announced against (these three
+| simplified to nay), voted present, voted present to avoid conflict
+| of interest, and did not vote or otherwise make a position known
+| (these three simplified to an unknown disposition).
+|
+| Jeff Schlimmer, 23 April 1987.
+|
+
+democrat, republican			|  classes
+
+handicapped infants:			n, y, u
+water project cost sharing:		n, y, u
+adoption of the budget resolution:	n, y, u
+physician fee freeze:			n, y, u
+el salvador aid:			n, y, u
+religious groups in schools:		n, y, u
+anti satellite test ban:		n, y, u
+aid to nicaraguan contras:		n, y, u
+mx missile:				n, y, u
+immigration:				n, y, u
+synfuels corporation cutback:		n, y, u
+education spending:			n, y, u
+superfund right to sue:			n, y, u
+crime:					n, y, u
+duty free exports:			n, y, u
+export administration act south africa:	n, y, u

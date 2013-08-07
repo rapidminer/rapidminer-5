@@ -1,0 +1,4 @@
+colt.jar and commons-collections.jar are used by jung.jar.
+
+The other libraries are used by the RapidMiner core and might also be used by
+plugins.

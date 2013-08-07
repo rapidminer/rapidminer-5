@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" dir="ltr"><head><table cellpadding=0 cellspacing=0><tr><td><img src="icon:///24/import.png" /></td><td width="5"></td><td><h2 class="firstHeading" id="firstHeading">Stream Database</h4></td></tr></table><hr noshade="true"></head>
+<body class="mediawiki ltr ns-0 ns-subject page-Stream_Database skin-monobook">
+<div id="content">
+	
+	
+	
+	<div id="bodyContent">
+		
+		
+		
+		
+<div id="synopsis">
+<h4>
+<span class="mw-headline" id="Synopsis">Synopsis</span>
+</h4>
+<p>
+This operator reads an example set from an SQL database by incrementally caching it (recommended).
+</p>
+</div><br/><h4> <span class="mw-headline" id="Description"> Description </span>
+</h4>
+<p>
+This operator reads an <i>ExampleSet</i> from an SQL database. The data is load from a single table which is defined with the table name parameter. Please note that table and column names are often case sensitive. Databases may behave differently here.
+</p>
+<p>
+The most convenient way of defining the necessary parameters is the configuration wizard. The most important parameters (database URL and user name) will be automatically determined by this wizard and it is also possible to define the special attributes like labels or ids.
+</p>
+<p>
+In contrast to the DatabaseExampleSource operator, which loads the data into the main memory, this operator keeps the data in the database and performs the data reading in batches. This allows RapidMiner to access data sets of arbitrary sizes without any size restrictions.
+</p>
+<p>
+Please note the following important restrictions and notes: 
+
+
+<ul class="ports">
+<li> only manifested tables (no views) are allowed as the base for this data caching operator,
+</li>
+<li> if no primary key and index is present, a new column named RM_INDEX is created and automatically used as primary key,
+</li>
+<li> if a primary key is already present in the specified table, a new table named RM_MAPPED_INDEX is created mapping a new index column RM_INDEX to the original primary key.
+</li>
+<li> users can provide the primary key column RM_INDEX themself which then has to be an integer valued index attribute, counting starts with 1 without any gaps or missing values for all rows
+</li>
+</ul>
+Beside the new index column or the mapping table creation <i>no writing actions</i> are performed in the database. Moreover, <i>data sets built on top of a cached database table do not support writing actions at all</i>. Users have to materialize the data, change it, and write it back into a new table of the database (e.g.with the <i>DatabaseExampleSetWriter</i>. If the data set is large, users can employ the operator <i>BatchProcessing</i> for splitting up this data change task. 
+</p><br/><h4> <span class="mw-headline" id="Input"> Input </span>
+</h4><br/><h4> <span class="mw-headline" id="Output"> Output </span>
+</h4>
+
+<ul class="ports">
+<li> <b>output</b>:
+</li>
+</ul><br/><h4> <span class="mw-headline" id="Parameters"> Parameters </span>
+</h4>
+
+<ul class="ports">
+<li> <b>define connection</b>:  Indicates how the database connection should be specified.
+</li>
+<li> <b>connection</b>:  A predefined database connection.
+</li>
+<li> <b>database system</b>:  The used database system.
+</li>
+<li> <b>database url</b>:  The URL connection string for the database, e.g. 'jdbc:mysql://foo.bar:portnr/database'
+</li>
+<li> <b>username</b>:  The database username.
+</li>
+<li> <b>password</b>:  The password for the database.
+</li>
+<li> <b>jndi name</b>:  JNDI name for a data source.
+</li>
+<li> <b>table name</b>:  A database table.
+</li>
+<li> <b>recreate index</b>:  Indicates if a recreation of the index or index mapping table should be forced.
+</li>
+<li> <b>label attribute</b>:  The (case sensitive) name of the label attribute
+</li>
+<li> <b>id attribute</b>:  The (case sensitive) name of the id attribute
+</li>
+<li> <b>weight attribute</b>:  The (case sensitive) name of the weight attribute
+</li>
+</ul><br/><h4> <span class="mw-headline" id="ExampleProcess"> ExampleProcess </span>
+</h4><br/><div>
+</div>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" dir="ltr"><head><table cellpadding=0 cellspacing=0><tr><td><img src="icon:///24/import.png" /></td><td width="5"></td><td><h2 class="firstHeading" id="firstHeading">Read XRFF</h4></td></tr></table><hr noshade="true"></head>
+<body class="mediawiki ltr ns-0 ns-subject page-Read_XRFF skin-monobook">
+<div id="content">
+	
+	
+	
+	<div id="bodyContent">
+		
+		
+		
+		
+<div id="synopsis">
+<h4>
+<span class="mw-headline" id="Synopsis">Synopsis</span>
+</h4>
+<p>
+This operator can read xrff files.
+</p>
+</div><br/><h4> <span class="mw-headline" id="Description"> Description </span>
+</h4>
+<p>
+This operator can read XRFF files known from Weka. The XRFF (eXtensible attribute-Relation File Format) is an XML-based extension of the ARFF format in some sense similar to the original RapidMiner file format for attribute description files (.aml).
+</p>
+<p>
+Here you get a small example for the IRIS dataset represented as XRFF file:
+</p>
+<table class=pre border=0 bordercolor=black style=border-style:dashed; xml:space="preserve"> &lt;?xml version="1.0" encoding="utf-8"?&gt; &lt;dataset name="iris" version="3.5.3"&gt; &lt;header&gt; &lt;attributes&gt; &lt;attribute name="sepallength" type="numeric"/&gt; &lt;attribute name="sepalwidth" type="numeric"/&gt; &lt;attribute name="petallength" type="numeric"/&gt; &lt;attribute name="petalwidth" type="numeric"/&gt; &lt;attribute class="yes" name="class" type="nominal"&gt; &lt;labels&gt; &lt;label&gt;Iris-setosa&lt;/label&gt; &lt;label&gt;Iris-versicolor&lt;/label&gt; &lt;label&gt;Iris-virginica&lt;/label&gt; &lt;/labels&gt; &lt;/attribute&gt; &lt;/attributes&gt; &lt;/header&gt; &lt;body&gt; &lt;instances&gt; &lt;instance&gt; &lt;value&gt;5.1&lt;/value&gt; &lt;value&gt;3.5&lt;/value&gt; &lt;value&gt;1.4&lt;/value&gt; &lt;value&gt;0.2&lt;/value&gt; &lt;value&gt;Iris-setosa&lt;/value&gt; &lt;/instance&gt; &lt;instance&gt; &lt;value&gt;4.9&lt;/value&gt; &lt;value&gt;3&lt;/value&gt; &lt;value&gt;1.4&lt;/value&gt; &lt;value&gt;0.2&lt;/value&gt; &lt;value&gt;Iris-setosa&lt;/value&gt; &lt;/instance&gt; ... &lt;/instances&gt; &lt;/body&gt; &lt;/dataset&gt; </table> 
+<p>
+Please note that the sparse XRFF format is currently not supported, please use one of the other options for sparse data files provided by RapidMiner.
+</p>
+<p>
+Since the XML representation takes up considerably more space since the data is wrapped into XML tags, one can also compress the data via gzip. RapidMiner automatically recognizes a file being gzip compressed, if the file's extension is .xrff.gz instead of .xrff.
+</p>
+<p>
+Similar to the native RapidMiner data definition via .aml and almost arbitrary data files, the XRFF format contains some additional features. Via the class="yes" attribute in the attribute specification in the header, one can define which attribute should used as a prediction label attribute. Although the RapidMiner terminus for such classes is "label" instead of "class" we support the terminus class in order to not break compatibility with original XRFF files.
+</p>
+<p>
+Please note that loading attribute weights is currently not supported, please use the other RapidMiner operators for attribute weight loading and writing for this purpose.
+</p>
+<p>
+Instance weights can be defined via a weight XML attribute in each instance tag. By default, the weight is 1. Here's an example:
+</p>
+<table class=pre border=0 bordercolor=black style=border-style:dashed; xml:space="preserve"> &lt;instance weight="0.75"&gt; &lt;value&gt;5.1&lt;/value&gt; &lt;value&gt;3.5&lt;/value&gt; &lt;value&gt;1.4&lt;/value&gt; &lt;value&gt;0.2&lt;/value&gt; &lt;value&gt;Iris-setosa&lt;/value&gt; &lt;/instance&gt; </table> 
+<p>
+Since the XRFF format does not support id attributes one have to use one of the RapidMiner operators in order to change on of the columns to the id column if desired. This has to be done after loading the data.
+</p><br/><h4> <span class="mw-headline" id="Input"> Input </span>
+</h4><br/><h4> <span class="mw-headline" id="Output"> Output </span>
+</h4>
+
+<ul class="ports">
+<li> <b>output</b>:
+</li>
+</ul><br/><h4> <span class="mw-headline" id="Parameters"> Parameters </span>
+</h4>
+
+<ul class="ports">
+<li> <b>data file</b>:  The path to the data file.
+</li>
+<li> <b>id attribute</b>:  The (case sensitive) name of the id attribute
+</li>
+<li> <b>datamanagement</b>:  Determines, how the data is represented internally.
+</li>
+<li> <b>decimal point character</b>:  Character that is used as decimal point.
+</li>
+<li> <b>sample ratio</b>:  The fraction of the data set which should be read (1 = all; only used if sample_size = -1)
+</li>
+<li> <b>sample size</b>:  The exact number of samples which should be read (-1 = use sample ratio; if not -1, sample_ratio will not have any effect)
+</li>
+<li> <b>use local random seed</b>:  Indicates if a local random seed should be used.
+</li>
+<li> <b>local random seed</b>:  Specifies the local random seed
+</li>
+</ul><br/><h4> <span class="mw-headline" id="ExampleProcess"> ExampleProcess </span>
+</h4><br/><div>
+</div>
+</body>
+</html>

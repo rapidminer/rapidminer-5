@@ -1,0 +1,1 @@
+Copy downloaded plugins into this directory.

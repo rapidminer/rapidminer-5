@@ -1,0 +1,13 @@
+Changes from RapidMiner 5.3.6 to 5.3.7
+--------------------------------------
+* The current process is auto-saved, and the last edited process can now be restored after RapidMiner has terminated abnormally
+* Moved "Close all Results" button in the Results view to the popup menu on result tabs (right-click on a result tab header)
+* It is now possible to store different credentials for multiple RapidAnalytics repositories which all point to the same RapidAnalytics
+* Support for Vertica database (JDBC driver not shipped with RapidMiner)
+* Buttons from the "RapidAnalytics Proceesses" toolbar are moved to the context menu (Stop process, Open result, etc.)
+* Newly created repositories must have unique names now
+* BUGFIX: Certain dialogs should be no longer too big when using HD-ready resolution or 1024x768 (e.g. for presentations)
+* BUGFIX: Process should no longer be flagged as changed when entering/leaving a subprocess via undo/redo
+* BUGFIX: It is no longer possible to create multiple local repositories in the same location
+* BUGFIX: Fixed error when trying to import a binary file into a newly created folder
+* BUGFIX: Changes to the user credentials in the "Configure Repository" dialog will now take effect without having to restart RapidMiner

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<process version="5.0">
+  <context>
+    <input/>
+    <output/>
+    <macros/>
+  </context>
+  <operator activated="true" class="process" expanded="true" name="Root">
+    <description>&lt;p&gt;This process loads numerical data from file and generates some attributes with the feature generation operator. The parameter list &amp;quot;functions&amp;quot; of the generation operator must be edited in order to define the functions which   should be generated. &lt;/p&gt;&lt;p&gt;Try the following: &lt;ul&gt;&lt;li&gt;Start the process. Use breakpoints to check the generation step. The parameter &amp;quot;keep_all&amp;quot; defines if all attributes should be used for the result example set or only the newly generated ones.&lt;/li&gt;&lt;li&gt;Edit the parameter list &amp;quot;functions&amp;quot; and add some other functions. Most of the known mathematical  functions can be used.&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;</description>
+    <parameter key="logverbosity" value="3"/>
+    <parameter key="random_seed" value="2001"/>
+    <parameter key="send_mail" value="1"/>
+    <parameter key="process_duration_for_mail" value="30"/>
+    <parameter key="encoding" value="SYSTEM"/>
+    <process expanded="true" height="608" width="822">
+      <operator activated="true" class="retrieve" expanded="true" height="60" name="Retrieve" width="90" x="45" y="30">
+        <parameter key="repository_entry" value="../../data/Polynomial"/>
+      </operator>
+      <operator activated="true" class="generate_attributes" expanded="true" height="76" name="Generation" width="90" x="179" y="30">
+        <list key="function_descriptions">
+          <parameter key="sum" value="a1+a2"/>
+          <parameter key="product" value="a3*a4"/>
+          <parameter key="nested" value="(a1 + a3) * a4"/>
+        </list>
+        <parameter key="use_standard_constants" value="true"/>
+        <parameter key="keep_all" value="true"/>
+      </operator>
+      <connect from_op="Retrieve" from_port="output" to_op="Generation" to_port="example set input"/>
+      <connect from_op="Generation" from_port="example set output" to_port="result 1"/>
+      <portSpacing port="source_input 1" spacing="0"/>
+      <portSpacing port="sink_result 1" spacing="0"/>
+      <portSpacing port="sink_result 2" spacing="0"/>
+    </process>
+  </operator>
+</process>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<process version="5.0">
+  <context>
+    <input/>
+    <output/>
+    <macros/>
+  </context>
+  <operator activated="true" class="process" expanded="true" name="Root">
+    <description>&lt;p&gt;  Sometimes it is interesting how learning schemes or other data mining operators perform on noisy data. The noise operator simply adds white noise to the input data. The standard deviation of the noise can be set for each attribute independently. Additionally some random attributes can be added to the input example set. &lt;/p&gt;  &lt;p&gt; Try the following: &lt;ul&gt; &lt;li&gt;Change the number of additional random attributes and perform the process again. In the result display the number of random attributes has changed.&lt;/li&gt;   &lt;li&gt;Please change the view mode in the Result display from &amp;quot;table view&amp;quot; to &amp;quot;plot view&amp;quot;. The built in plotter of RapidMiner can plot your data in several ways. Simply select the axis and the value to plot. 3D plot can be made if &amp;quot;gnuplot&amp;quot; is installed and configured. Another possible way to plot 3 dimensions is to use the color plot provided by the usual RapidMiner plotter if three dimensions are selected.&lt;/li&gt; &lt;li&gt;Of course there are many more preprocessing operators available in RapidMiner. Please refer to the operator reference in the RapidMiner Tutorial. Check also the group of preprocessing operators and try some in this process (e.g. normalization)&lt;/li&gt; &lt;/ul&gt; &lt;/p&gt;   </description>
+    <parameter key="logverbosity" value="3"/>
+    <parameter key="random_seed" value="2001"/>
+    <parameter key="send_mail" value="1"/>
+    <parameter key="process_duration_for_mail" value="30"/>
+    <parameter key="encoding" value="SYSTEM"/>
+    <process expanded="true" height="604" width="934">
+      <operator activated="true" class="retrieve" expanded="true" height="60" name="Retrieve" width="90" x="45" y="30">
+        <parameter key="repository_entry" value="../../data/Polynomial"/>
+      </operator>
+      <operator activated="true" class="add_noise" expanded="true" height="94" name="NoiseGenerator" width="90" x="179" y="30">
+        <parameter key="return_preprocessing_model" value="false"/>
+        <parameter key="create_view" value="false"/>
+        <parameter key="attribute_filter_type" value="0"/>
+        <parameter key="attribute" value=""/>
+        <parameter key="use_except_expression" value="false"/>
+        <parameter key="value_type" value="0"/>
+        <parameter key="use_value_type_exception" value="false"/>
+        <parameter key="except_value_type" value="11"/>
+        <parameter key="block_type" value="0"/>
+        <parameter key="use_block_type_exception" value="false"/>
+        <parameter key="except_block_type" value="8"/>
+        <parameter key="invert_selection" value="false"/>
+        <parameter key="include_special_attributes" value="false"/>
+        <parameter key="random_attributes" value="3"/>
+        <parameter key="label_noise" value="0.01"/>
+        <parameter key="default_attribute_noise" value="0.0"/>
+        <list key="noise">
+          <parameter key="a1" value="0.5"/>
+          <parameter key="a3" value="0.2"/>
+        </list>
+        <parameter key="offset" value="5.0"/>
+        <parameter key="linear_factor" value="2.0"/>
+        <parameter key="use_local_random_seed" value="false"/>
+        <parameter key="local_random_seed" value="1992"/>
+      </operator>
+      <connect from_op="Retrieve" from_port="output" to_op="NoiseGenerator" to_port="example set input"/>
+      <connect from_op="NoiseGenerator" from_port="example set output" to_port="result 1"/>
+      <portSpacing port="source_input 1" spacing="0"/>
+      <portSpacing port="sink_result 1" spacing="0"/>
+      <portSpacing port="sink_result 2" spacing="0"/>
+    </process>
+  </operator>
+</process>

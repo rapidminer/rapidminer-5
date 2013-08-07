@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<process version="5.3.000">
+  <context>
+    <input/>
+    <output/>
+    <macros/>
+  </context>
+  <operator activated="true" class="process" compatibility="5.0.000" expanded="true" name="Root">
+    <description>&lt;p&gt; Usually much time of data mining is spent to preprocess the data. RapidMiner offers several operators to read your data from many different sources and also operators to process your data and ease learning. &lt;/p&gt; &lt;p&gt; In many applications the data contains missing values. One of the available preprocessing operators replaces them with the average / min / max of the attribute. Other operators can also handle infinite values. &lt;/p&gt; &lt;p&gt; Try the following: &lt;ul&gt; &lt;li&gt;Select the &amp;quot;Retrieve&amp;quot; operator. The &amp;quot;Parameters&amp;quot; tab on the right side shows the parameters of this operator. The &amp;quot;Retrieve&amp;quot; operator only has the repository entry parameter. If you pres F7 or do an right click in the &amp;quot;Retrieve&amp;quot; operator, you can set a break point, ie. the process execution will stop after this operator. If you now run the process by pressing the &amp;quot;Play&amp;quot; (F11) button the process starts and yields after the breakpoint in the &amp;quot;Retrieve&amp;quot; operator. Now RapidMiner displays the output of the &amp;quot;Retrieve&amp;quot; operator in the ExampleSet (Retrieve) tab. The column &amp;quot;Missings&amp;quot; indicates the number of missing values for a attribute, eg. the pension attribute has 22 missing values. Switch from the &amp;quot;Meta Data View&amp;quot; to the &amp;quot;Data View&amp;quot; to take a look at the actual missing values. In the data table you can find some question marks, which indicate a missing value for one sample (row). The &amp;quot;View Filter&amp;quot; in the upper right corner of the tab allows you to filter your data set by certain criteria. Try out some filters so see which examples are complete and which do have missing values. &lt;/li&gt; &lt;li&gt;Now go switch back to the Design perspective (Menu bar: View/Perspectives/Design). In order to replace missing values in the data we choose the &amp;quot;Prepocessing (Replace Missing Values)&amp;quot; operator.  You can enable the Expert Mode by pressing F4. By selecting the prepocessing operator you can set up its parameters in the parameters tab on the right side. The parameter &amp;quot;attribute filter type&amp;quot; determines the attributes which the  preprocessor is applied to. The parameter &amp;quot;default&amp;quot; determines the value a missing value is replaced with. You can select various options, eg. the average value of the attribute. You can concatenate various preprocessing operators in order to replace different attributes with different types of  default values. &lt;/li&gt; &lt;/ul&gt; &lt;/p&gt;</description>
+    <parameter key="logverbosity" value="3"/>
+    <parameter key="random_seed" value="2001"/>
+    <parameter key="send_mail" value="1"/>
+    <parameter key="notification_email" value=""/>
+    <parameter key="process_duration_for_mail" value="30"/>
+    <parameter key="encoding" value="SYSTEM"/>
+    <process expanded="true" height="584" width="300">
+      <operator activated="true" class="retrieve" compatibility="5.0.000" expanded="true" height="60" name="Retrieve" width="90" x="45" y="30">
+        <parameter key="repository_entry" value="../../data/Labor-Negotiations"/>
+      </operator>
+      <operator activated="true" class="replace_missing_values" compatibility="5.3.000" expanded="true" height="94" name="Preprocessing" width="90" x="180" y="30">
+        <parameter key="return_preprocessing_model" value="false"/>
+        <parameter key="create_view" value="false"/>
+        <parameter key="attribute_filter_type" value="all"/>
+        <parameter key="attribute" value="shift-differential"/>
+        <parameter key="attributes" value=""/>
+        <parameter key="use_except_expression" value="false"/>
+        <parameter key="value_type" value="numeric"/>
+        <parameter key="use_value_type_exception" value="false"/>
+        <parameter key="except_value_type" value="11"/>
+        <parameter key="block_type" value="0"/>
+        <parameter key="use_block_type_exception" value="false"/>
+        <parameter key="except_block_type" value="8"/>
+        <parameter key="invert_selection" value="false"/>
+        <parameter key="include_special_attributes" value="false"/>
+        <parameter key="default" value="average"/>
+        <list key="columns">
+          <parameter key="wage-inc-1st" value="minimum"/>
+          <parameter key="wage-inc-3rd" value="maximum"/>
+        </list>
+      </operator>
+      <connect from_op="Retrieve" from_port="output" to_op="Preprocessing" to_port="example set input"/>
+      <connect from_op="Preprocessing" from_port="example set output" to_port="result 1"/>
+      <portSpacing port="source_input 1" spacing="0"/>
+      <portSpacing port="sink_result 1" spacing="0"/>
+      <portSpacing port="sink_result 2" spacing="0"/>
+    </process>
+  </operator>
+</process>

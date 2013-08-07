@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<process version="5.0">
+  <context>
+    <input/>
+    <output/>
+    <macros/>
+  </context>
+  <operator activated="true" class="process" expanded="true" name="Root">
+    <description>If the data set at hand prodives an id attribute the id is presented as tool tip text at the mouse pointer above a plotter data point. It the process contains an ExampleVisualizer operator the user can make a double-click on a data point which creates a data view of the selected data point. Other, more special, visualizers exist which opens a text viewer for text data processes or an Audio player in case of music data.  Please note that the example set visualization feature is currently only available for the scatter plotter.</description>
+    <parameter key="logverbosity" value="3"/>
+    <parameter key="random_seed" value="2001"/>
+    <parameter key="send_mail" value="1"/>
+    <parameter key="process_duration_for_mail" value="30"/>
+    <parameter key="encoding" value="SYSTEM"/>
+    <process expanded="true" height="604" width="934">
+      <operator activated="true" class="retrieve" expanded="true" height="60" name="Retrieve" width="90" x="45" y="30">
+        <parameter key="repository_entry" value="../../data/Iris"/>
+      </operator>
+      <operator activated="true" class="generate_id" expanded="true" height="76" name="IdTagging" width="90" x="180" y="30">
+        <parameter key="create_nominal_ids" value="false"/>
+      </operator>
+      <operator activated="true" class="examplevisualizer" expanded="true" height="76" name="ExampleVisualizer" width="90" x="313" y="30"/>
+      <connect from_op="Retrieve" from_port="output" to_op="IdTagging" to_port="example set input"/>
+      <connect from_op="IdTagging" from_port="example set output" to_op="ExampleVisualizer" to_port="example set input"/>
+      <connect from_op="ExampleVisualizer" from_port="example set output" to_port="result 1"/>
+      <portSpacing port="source_input 1" spacing="0"/>
+      <portSpacing port="sink_result 1" spacing="0"/>
+      <portSpacing port="sink_result 2" spacing="0"/>
+    </process>
+  </operator>
+</process>

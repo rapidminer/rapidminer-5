@@ -1,0 +1,47 @@
+Numerical X-Validation
+A cross-validation evaluating a linear regression model.
+symbol_percent.png
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<operator activated="true" class="x_validation" expanded="true" height="112" name="Validation" width="90" x="45" y="30">
+  <description>A cross validation including a linear regression.</description>
+  <parameter key="create_complete_model" value="false"/>
+  <parameter key="average_performances_only" value="true"/>
+  <parameter key="leave_one_out" value="false"/>
+  <parameter key="number_of_validations" value="10"/>
+  <parameter key="sampling_type" value="2"/>
+  <parameter key="use_local_random_seed" value="false"/>
+  <parameter key="local_random_seed" value="1992"/>
+  <process expanded="true" height="654" width="466">
+    <operator activated="true" class="linear_regression" expanded="true" height="76" name="Linear Regression" width="90" x="45" y="30">
+      <parameter key="feature_selection" value="1"/>
+      <parameter key="eliminate_colinear_features" value="true"/>
+      <parameter key="use_bias" value="true"/>
+      <parameter key="min_standardized_coefficient" value="1.5"/>
+      <parameter key="ridge" value="1.0E-8"/>
+    </operator>
+    <connect from_port="training" to_op="Linear Regression" to_port="training set"/>
+    <connect from_op="Linear Regression" from_port="model" to_port="model"/>
+    <portSpacing port="source_training" spacing="0"/>
+    <portSpacing port="sink_model" spacing="0"/>
+    <portSpacing port="sink_through 1" spacing="0"/>
+  </process>
+  <process expanded="true" height="654" width="466">
+    <operator activated="true" class="apply_model" expanded="true" height="76" name="Apply Model" width="90" x="45" y="30">
+      <list key="application_parameters"/>
+      <parameter key="create_view" value="false"/>
+    </operator>
+    <operator activated="true" class="performance" expanded="true" height="76" name="Performance" width="90" x="179" y="30">
+      <parameter key="use_example_weights" value="true"/>
+    </operator>
+    <connect from_port="model" to_op="Apply Model" to_port="model"/>
+    <connect from_port="test set" to_op="Apply Model" to_port="unlabelled data"/>
+    <connect from_op="Apply Model" from_port="labelled data" to_op="Performance" to_port="labelled data"/>
+    <connect from_op="Performance" from_port="performance" to_port="averagable 1"/>
+    <portSpacing port="source_model" spacing="0"/>
+    <portSpacing port="source_test set" spacing="0"/>
+    <portSpacing port="source_through 1" spacing="0"/>
+    <portSpacing port="sink_averagable 1" spacing="0"/>
+    <portSpacing port="sink_averagable 2" spacing="0"/>
+  </process>
+</operator>
+

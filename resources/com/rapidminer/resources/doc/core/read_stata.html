@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" dir="ltr"><head><table cellpadding=0 cellspacing=0><tr><td><img src="icon:///24/import.png" /></td><td width="5"></td><td><h2 class="firstHeading" id="firstHeading">Read Stata</h4></td></tr></table><hr noshade="true"></head>
+<body class="mediawiki ltr ns-0 ns-subject page-Read_Stata skin-monobook">
+<div id="content">
+	
+	
+	
+	<div id="bodyContent">
+		
+		
+		
+		
+<div id="synopsis">
+<h4>
+<span class="mw-headline" id="Synopsis">Synopsis</span>
+</h4>
+<p>
+This operator can read Stata data files.
+</p>
+</div><br/><h4> <span class="mw-headline" id="Description"> Description </span>
+</h4>
+<p>This operator can read stata files. Currently only stata files of version 113 or 114 are supported.
+
+
+</p><br/><h4> <span class="mw-headline" id="Input"> Input </span>
+</h4><br/><h4> <span class="mw-headline" id="Output"> Output </span>
+</h4>
+
+<ul class="ports">
+<li> <b>output</b>:
+</li>
+</ul><br/><h4> <span class="mw-headline" id="Parameters"> Parameters </span>
+</h4>
+
+<ul class="ports">
+<li> <b>filename</b>:  Name of the file to read the data from.
+</li>
+<li> <b>datamanagement</b>:  Determines, how the data is represented internally.
+</li>
+<li> <b>attribute naming mode</b>:  Determines which variable properties should be used for attribute naming.
+</li>
+<li> <b>handle value labels</b>:  Specifies how to handle attributes with value labels, i.e. whether to ignore the labels or how to use them.
+</li>
+<li> <b>sample ratio</b>:  The fraction of the data set which should be read (1 = all; only used if sample_size = -1)
+</li>
+<li> <b>sample size</b>:  The exact number of samples which should be read (-1 = all; if not -1, sample_ratio will not have any effect)
+</li>
+<li> <b>use local random seed</b>:  Indicates if a local random seed should be used.
+</li>
+<li> <b>local random seed</b>:  Specifies the local random seed
+</li>
+</ul><br/><h4> <span class="mw-headline" id="ExampleProcess"> ExampleProcess </span>
+</h4><br/><div>
+</div>
+</body>
+</html>

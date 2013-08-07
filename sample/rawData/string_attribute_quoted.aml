@@ -1,0 +1,23 @@
+<attributeset default_source="string_attribute_quoted.dat">
+
+  <attribute
+    name      = "first"
+    sourcecol = "1"
+    valuetype = "nominal"
+  />
+  
+  <attribute
+    name      = "second"
+    sourcecol = "2"
+    valuetype = "nominal"
+  />
+  
+  <label
+    name      = "label"
+    sourcecol = "3"
+    valuetype = "nominal">
+    <value>first class</value>
+    <value>second class</value>    
+  </label>
+  
+</attributeset>

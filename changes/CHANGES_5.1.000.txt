@@ -1,0 +1,39 @@
+Changes from RapidMiner 5.0 to 5.1
+----------------------------------
+ * Added RapidAnalytics connectivity
+ * Added new repository type that reflects database connections
+ * Added type-specific icons to repository tree
+ * Added annotations to IOObjects
+ * Import operators and wizards remake
+ * Most wanted feature: "Rename" and "Set Role" can handle multiple attributes at a time
+ * Versioned operators allow easier updates
+ * "Generate Attributes" has new UI and supports more text and date functions
+ * Operator documentation uses Wiki (http://rapid-i.com/wiki/).
+ * IOObjects can be annotated, e.g. with file source or SQL statement
+ * Added new Operators: 
+   - Print to Console
+   - Unset Macro
+   - "Auto MLP" and "k-Means (fast)" contributed by DFKI
+   - Hierarchical Classification
+   - Numerical to Date
+   - Delay
+ * Database operators can prepare statements
+ * Revised import wizards
+ * Background tasks stoppable
+ * Added process profiling and resource consumption annotations
+ * Added Support for R Extension
+ * Added new boolean GUI property rapidminer.gui.fetch_data_base_table_names which suppresses to fetch data base table names in the SQLQueryBuilder
+ * More efficient meta data handling for Excel, CSV, and database readers
+ * Meta data propagation uses context macros
+			throw new UserError (this, "move_file.exists", destinationFile);
+		
+ * Splash screen shows plugins
+ * Aggregate operator can compute product
+ * Various smaller fixes
+ * Various UI improvements
+  
+ Major Bugfixes:
+ 
+ * Fixed memory leak causing RapidMiner to run out of memory if processed many and large example sets
+ * Readded descriptive error messages  
+

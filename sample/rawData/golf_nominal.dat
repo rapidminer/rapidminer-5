@@ -1,0 +1,15 @@
+# the nominal attribute value of the golf data set
+sunny false
+sunny, true
+overcast false
+rain false
+rain false
+rain true
+overcast true
+sunny false
+sunny false
+rain false
+sunny true
+overcast true
+overcast false
+rain true

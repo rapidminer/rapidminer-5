@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<process version="5.0">
+  <context>
+    <input/>
+    <output/>
+    <macros/>
+  </context>
+  <operator activated="true" class="process" expanded="true" name="Process">
+    <parameter key="logverbosity" value="3"/>
+    <parameter key="random_seed" value="2001"/>
+    <parameter key="send_mail" value="1"/>
+    <parameter key="process_duration_for_mail" value="30"/>
+    <parameter key="encoding" value="SYSTEM"/>
+    <process expanded="true" height="502" width="574">
+      <operator activated="true" class="retrieve" expanded="true" height="60" name="Retrieve" width="90" x="45" y="30"/>
+      <operator activated="true" class="x_validation" expanded="true" height="112" name="Validation" width="90" x="179" y="30">
+        <parameter key="create_complete_model" value="false"/>
+        <parameter key="average_performances_only" value="true"/>
+        <parameter key="leave_one_out" value="false"/>
+        <parameter key="number_of_validations" value="10"/>
+        <parameter key="sampling_type" value="2"/>
+        <parameter key="use_local_random_seed" value="false"/>
+        <parameter key="local_random_seed" value="1992"/>
+        <process expanded="true" height="502" width="165">
+          <operator activated="true" class="k_means" expanded="true" height="76" name="Clustering" width="90" x="45" y="30">
+            <parameter key="add_cluster_attribute" value="true"/>
+            <parameter key="add_as_label" value="false"/>
+            <parameter key="remove_unlabeled" value="false"/>
+            <parameter key="k" value="2"/>
+            <parameter key="max_runs" value="10"/>
+            <parameter key="max_optimization_steps" value="100"/>
+            <parameter key="use_local_random_seed" value="false"/>
+            <parameter key="local_random_seed" value="1992"/>
+          </operator>
+          <connect from_port="training" to_op="Clustering" to_port="example set"/>
+          <connect from_op="Clustering" from_port="cluster model" to_port="model"/>
+          <connect from_op="Clustering" from_port="clustered set" to_port="through 1"/>
+          <portSpacing port="source_training" spacing="0"/>
+          <portSpacing port="sink_model" spacing="0"/>
+          <portSpacing port="sink_through 1" spacing="0"/>
+          <portSpacing port="sink_through 2" spacing="0"/>
+        </process>
+        <process expanded="true" height="502" width="435">
+          <operator activated="true" class="apply_model" expanded="true" height="76" name="Apply Model" width="90" x="45" y="30">
+            <list key="application_parameters"/>
+            <parameter key="create_view" value="false"/>
+          </operator>
+          <operator activated="true" class="map_clustering_on_labels" expanded="true" height="76" name="Map Clustering on Labels" width="90" x="180" y="30"/>
+          <operator activated="true" class="performance" expanded="true" height="76" name="Performance" width="90" x="315" y="30">
+            <parameter key="use_example_weights" value="true"/>
+          </operator>
+          <connect from_port="model" to_op="Apply Model" to_port="model"/>
+          <connect from_port="test set" to_op="Apply Model" to_port="unlabelled data"/>
+          <connect from_op="Apply Model" from_port="labelled data" to_op="Map Clustering on Labels" to_port="example set"/>
+          <connect from_op="Apply Model" from_port="model" to_op="Map Clustering on Labels" to_port="cluster model"/>
+          <connect from_op="Map Clustering on Labels" from_port="example set" to_op="Performance" to_port="labelled data"/>
+          <connect from_op="Performance" from_port="performance" to_port="averagable 1"/>
+          <portSpacing port="source_model" spacing="0"/>
+          <portSpacing port="source_test set" spacing="0"/>
+          <portSpacing port="source_through 1" spacing="0"/>
+          <portSpacing port="source_through 2" spacing="0"/>
+          <portSpacing port="sink_averagable 1" spacing="0"/>
+          <portSpacing port="sink_averagable 2" spacing="0"/>
+        </process>
+      </operator>
+      <connect from_op="Retrieve" from_port="output" to_op="Validation" to_port="training"/>
+      <connect from_op="Validation" from_port="averagable 1" to_port="result 1"/>
+      <portSpacing port="source_input 1" spacing="0"/>
+      <portSpacing port="sink_result 1" spacing="0"/>
+      <portSpacing port="sink_result 2" spacing="0"/>
+    </process>
+  </operator>
+  <title>Use Clustering Algorithm as Classifier</title>
+  <description>This process uses a clustering algorithm as a classifier and evaluates it. To that end, during evaluation of the cluster model, the assigned clusters are used as predicted labels as to minimize the number of errors. Then, they can be evaluated as any other classification algorithm.</description>
+  <template-group>Modelling</template-group>
+  <template-parameters>
+    <template-parameter>
+      <operator>Clustering</operator>
+      <parameter>k</parameter>
+    </template-parameter>
+    <template-parameter>
+      <operator>Retrieve</operator>
+      <parameter>repository_entry</parameter>
+    </template-parameter>
+  </template-parameters>
+</process>

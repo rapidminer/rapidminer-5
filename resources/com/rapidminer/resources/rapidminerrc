@@ -1,0 +1,93 @@
+##
+## File: $Id: rapidminerrc,v 2.13 2009-01-14 13:45:41 ingomierswa Exp $
+##
+## This file 'rapidminerrc' contains system independent properties for RapidMiner
+## These properties may as well be set using java's -D option.
+## RapidMiner also scans for configuration files in the user's home directory
+## and in the current working directory.
+##
+
+## Format the logfile, i.e. use Unix style characters to mark characters
+## as bold (for display with less, more...) ?
+rapidminer.general.logfile.format                = no
+## The default character encoding used for file in- and output (SYSTEM, UTF-8, or ISO-8859-1 are common options)
+rapidminer.general.encoding                      = SYSTEM
+## The default random seed (-1: random random seed)
+rapidminer.general.randomseed                    = 2001
+## Indicates if only warning should be shown in cases where learners have not the desired capabilities
+rapidminer.general.capabilities.warn             = false
+## Indicates if RapidMiner should be run in debug mode (more technical error messages)
+rapidminer.general.debugmode                     = false
+## The default number of fraction digits for numbers
+rapidminer.general.fractiondigits.numbers        = 3
+## The default number of fraction digits for percent values
+rapidminer.general.fractiondigits.percent        = 2
+
+
+## sendmail command to send notification emails with. 
+rapidminer.tools.sendmail.command                = /usr/sbin/sendmail
+## gnuplot executable
+rapidminer.tools.gnuplot.command                 = gnuplot
+## editor for source code. For development only. 
+## %f is replaced by the filename, %l is replaced by the linenumber.
+# rapidminer.tools.editor                        = emacsclient --no-wait +%l %f
+
+
+## Indicates if generic process information should be displayed after loading if available
+rapidminer.gui.processinfo.show                 = true
+## Check for updates at startup?
+rapidminer.gui.update.check	                    = true
+## Beep when process terminates successfully?
+rapidminer.gui.beep.success                     = true
+## Beep when process causes error?
+rapidminer.gui.beep.error                       = true
+## Beep at breakpoint?
+rapidminer.gui.beep.breakpoint                  = true
+## The size of the scatter plots
+rapidminer.gui.plotter.matrixplot.size          = 200
+## Color for minimum values in the plotter legends
+rapidminer.gui.plotter.legend.mincolor          = 0,0,255
+## Color for maximum values in the plotter legends
+rapidminer.gui.plotter.legend.maxcolor          = 255,0,0
+## Limit for number of classes in plotter legends
+rapidminer.gui.plotter.legend.classlimit        = 20
+## Limit for number of nominal classes in colorized plots
+rapidminer.gui.plotter.colors.classlimit        = 10
+## Limit for the number of rows (data points) for plotting. Plotters will sample if this limit is exceeded.
+rapidminer.gui.plotter.rows.maximum             = 5000
+## Limit for number of states in the undo list
+rapidminer.gui.undolist.size                    = 10
+## Limit for number of rows of attribute editor
+rapidminer.gui.attributeeditor.rowlimit         = 50
+## Limit for number of rows of attribute editor
+rapidminer.gui.attributeeditor.columnlimit      = 20
+## Limit for number of rows in message viewer
+rapidminer.gui.messageviewer.rowlimit           = 1000
+## Color for warnings in the message viewer
+rapidminer.gui.messageviewer.highlight.warnings   = 51,151,51
+## Color for warnings in the message viewer
+rapidminer.gui.messageviewer.highlight.warnings   = 51,51,255
+## Color for errors in the message viewer
+rapidminer.gui.messageviewer.highlight.errors     = 255,51,204
+## Color for the log service indicator in the message viewer
+rapidminer.gui.messageviewer.highlight.logservice = 184,184,184
+## Shows a dialog asking for saving the current process before the process is started?
+rapidminer.gui.savedialog = true
+
+## the pluggable look and feel [system|cross_platform|classname]
+rapidminer.gui.plaf                              = system
+#rapidminer.gui.plaf                             = cross_platform
+#rapidminer.gui.plaf                             = com.sun.java.swing.plaf.motif.MotifLookAndFeel
+#rapidminer.gui.plaf                             = com.sun.java.swing.plaf.windows.WindowsLookAndFeel
+#rapidminer.gui.plaf                             = com.sun.java.swing.plaf.gtk.GTKLookAndFeel
+
+
+
+## Commands for external programs 
+
+#rapidminer.external.mysvm.learncommand           =
+#rapidminer.external.mysvm.applycommand           =
+#rapidminer.external.mysvm.weighted.learncommand  =
+#rapidminer.external.mysvm.weighted.applycommand  =
+#rapidminer.external.svmlight.learncommand        =
+#rapidminer.external.svmlight.applycommand        =

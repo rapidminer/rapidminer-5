@@ -1,0 +1,6 @@
+Changes from RapidMiner 5.2.1 to 5.2.2
+--------------------------------------
+* Remove Correlated Attributes uses deterministic random numbers
+* Improved Repository Tree handling (save expansion state on refresh and improved tree selection on entry removal)
+* Improved exporting of Advanced Charts View
+

@@ -1,0 +1,48 @@
+Changes from RapidMiner 5.3.9 to 5.3.12
+--------------------------------------
+* All operators that write files to disk will create missing directories
+* Disabling an operator with a sub-process does not disable its children operators anymore
+* Attribute parameters that are marked as mandatory but are not set will now cause an error when executing a process
+* RapidMiner creates a log file which logs exceptions
+* Fixed problems with uploading binary files to RapidAnalytics
+* Fixed error in CSV import wizard
+* Fixed memory leak in process result perspective
+* The operator tree will expand again when searching for operators
+* Fixed error in Pareto Plotter
+* Clustering Algorithms will stop if processes is aborted
+* Fixed error when calculating Cluster Density Performance of kMeans
+* JDBC drivers updated
+* Macros in the macro view are by default ordered by macro name
+* Adds an API for adding custom functions to the Expression Parser
+* Improved performance of the import wizards
+* Tabs can now by minimized with Alt+Backspace instead of Ctrl+Backspace
+* Fixes error in auto-wiring
+* Fixes compatibility issues after copying and pasting operators
+* Removed extensive logging if dockables are missing
+* Fixed bugs in the Regexp dialog
+* Fixed bug in the "cut()" expression
+
+
+* Neural Net: Improved handling of attribute names
+* Neural Net: Fixed model which gave different prediction depending whether the example set had a label or not
+* k-Means: Improved Metadata handling
+* k-Means: Applying nominal measures to numerical data is not possible anymore
+* Linear Regression: Improved missing values handling
+* Performance (Costs): Fixed error with missing prediction attribute
+* Performance (Costs): Metadata checks for missing attributes
+* Read Arff: Fixed handling of missing values in date attributes
+* Map: Reduced the number of warnings shown in the log
+* Rename: Renaming attributes to an already existing attribute name is not possible anymore
+* Aggregate: Fixed error in median function that occured if ignore_missings was checked
+* Expectation Maximum Clustering: Fixed missing values handling
+* Read CSV: Renamed 'escape character for quotes' parameter to 'escape character' 
+* GSP: Fixed problems with binominal regualr input attributes
+* GSP: shows correct renderer in results perspective again
+* Loop Parameters: Fixed parameter editor dismissing values
+* Loop Parameters: Show correct error if process is run without specifying parameters
+* Generate Attributes: Fixed removal of attribites if overwriting attributes, keep_all parameter removes all attributes
+* Optimize Parameters: Improved keyboard handling of paramter dialog
+* Update Database: Fixed bug in case no columns are SET
+* Send Mail: Fixed bug which caused an error after the password is encrypted
+* Numerical to Date: Fixed error in the attribute selector 
+* Average: Improved error messages

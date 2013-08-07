@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<process version="5.0">
+  <context>
+    <input/>
+    <output/>
+    <macros/>
+  </context>
+  <operator activated="true" class="process" expanded="true" name="Root">
+    <description>&lt;table&gt;&lt;tr&gt;&lt;td&gt;The ModelApplier operator is one of the most important RapidMiner operators.    It can be used to apply a previously learned model to (unseen) data.    &lt;/td&gt;&lt;td&gt;&lt;icon&gt;operators/24/model_applier &lt;/icon&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;In this process we first load some training data and learn a decision tree model. This model is then applied to the test data set with help of  the model applier. You can add a breakpoint  after the learner operator (from the context menu or by double clicking) in order to inspect the learned model. In this case, you have to resume the process by clicking on the resume button. &lt;/p&gt;</description>
+    <parameter key="logverbosity" value="3"/>
+    <parameter key="random_seed" value="2001"/>
+    <parameter key="send_mail" value="1"/>
+    <parameter key="process_duration_for_mail" value="30"/>
+    <parameter key="encoding" value="SYSTEM"/>
+    <process expanded="true" height="584" width="918">
+      <operator activated="true" class="retrieve" expanded="true" height="60" name="Retrieve" width="90" x="45" y="30">
+        <parameter key="repository_entry" value="../../data/Golf"/>
+      </operator>
+      <operator activated="true" class="decision_tree" expanded="true" height="76" name="DecisionTree" width="90" x="180" y="30">
+        <parameter key="criterion" value="gain_ratio"/>
+        <parameter key="minimal_size_for_split" value="4"/>
+        <parameter key="minimal_leaf_size" value="2"/>
+        <parameter key="minimal_gain" value="0.1"/>
+        <parameter key="maximal_depth" value="20"/>
+        <parameter key="confidence" value="0.25"/>
+        <parameter key="number_of_prepruning_alternatives" value="3"/>
+        <parameter key="no_pre_pruning" value="false"/>
+        <parameter key="no_pruning" value="false"/>
+      </operator>
+      <operator activated="true" class="retrieve" expanded="true" height="60" name="Retrieve (2)" width="90" x="313" y="75">
+        <parameter key="repository_entry" value="../../data/Golf-Testset"/>
+      </operator>
+      <operator activated="true" class="apply_model" expanded="true" height="76" name="ModelApplier" width="90" x="447" y="30">
+        <list key="application_parameters"/>
+        <parameter key="create_view" value="false"/>
+      </operator>
+      <connect from_op="Retrieve" from_port="output" to_op="DecisionTree" to_port="training set"/>
+      <connect from_op="DecisionTree" from_port="model" to_op="ModelApplier" to_port="model"/>
+      <connect from_op="Retrieve (2)" from_port="output" to_op="ModelApplier" to_port="unlabelled data"/>
+      <connect from_op="ModelApplier" from_port="labelled data" to_port="result 1"/>
+      <portSpacing port="source_input 1" spacing="0"/>
+      <portSpacing port="sink_result 1" spacing="0"/>
+      <portSpacing port="sink_result 2" spacing="0"/>
+    </process>
+  </operator>
+</process>

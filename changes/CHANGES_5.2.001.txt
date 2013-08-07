@@ -1,0 +1,4 @@
+Changes from RapidMiner 5.2.0 to 5.2.1
+--------------------------------------
+* Added operators to manage repository entries: Copy, Move, Delete, Rename
+

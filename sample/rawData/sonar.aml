@@ -1,0 +1,18 @@
+<attributeset default_source="sonar.dat">
+
+  <attribute 
+    name          = "attribute" 
+    valuetype     = "real" 
+    sourcecol     = "1" 
+    sourcecol_end = "60"
+  />
+  
+  <label
+    name      = "class"
+    sourcecol = "61"
+    valuetype = "nominal">
+    <value>Rock</value>
+    <value>Mine</value>
+  </label>
+  
+</attributeset>

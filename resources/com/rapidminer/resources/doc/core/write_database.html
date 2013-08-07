@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" dir="ltr"><head><table cellpadding=0 cellspacing=0><tr><td><img src="icon:///24/export2.png" /></td><td width="5"></td><td><h2 class="firstHeading" id="firstHeading">Write Database</h4></td></tr></table><hr noshade="true"></head>
+<body class="mediawiki ltr ns-0 ns-subject page-Write_Database skin-monobook">
+<div id="content">
+	
+	
+	
+	<div id="bodyContent">
+		
+		
+		
+		
+<div id="synopsis">
+<h4>
+<span class="mw-headline" id="Synopsis">Synopsis</span>
+</h4>
+<p>
+Writes the values of all examples to a single table in a database.
+</p>
+</div><br/><h4> <span class="mw-headline" id="Description"> Description </span>
+</h4>
+<p>
+This operator writes an <i>ExampleSet</i> into an SQL database. The user can specify the database connection and a table name. Please note that the table will be created during writing if it does not exist.
+</p>
+<p>
+The most convenient way of defining the necessary parameters is the configuration wizard. The most important parameters (database URL and user name) will be automatically determined by this wizard. At the end, you only have to define the table name and then you are ready.
+</p>
+<p>
+This operator only supports the writing of the complete example set consisting of all regular and special attributes and all examples. If this is not desired perform some preprocessing operators like attribute or example filter before applying this operator. 
+</p><br/><h4> <span class="mw-headline" id="Input"> Input </span>
+</h4>
+
+<ul class="ports">
+<li> <b>input</b>: <i>expects:</i> ExampleSet
+</li>
+</ul><br/><h4> <span class="mw-headline" id="Output"> Output </span>
+</h4>
+
+<ul class="ports">
+<li> <b>through</b>:
+</li>
+</ul><br/><h4> <span class="mw-headline" id="Parameters"> Parameters </span>
+</h4>
+
+<ul class="ports">
+<li> <b>define connection</b>:  Indicates how the database connection should be specified.
+</li>
+<li> <b>connection</b>:  A predefined database connection.
+</li>
+<li> <b>database system</b>:  The used database system.
+</li>
+<li> <b>database url</b>:  The URL connection string for the database, e.g. 'jdbc:mysql://foo.bar:portnr/database'
+</li>
+<li> <b>username</b>:  The database username.
+</li>
+<li> <b>password</b>:  The password for the database.
+</li>
+<li> <b>jndi name</b>:  JNDI name for a data source.
+</li>
+<li> <b>table name</b>:  A database table.
+</li>
+<li> <b>overwrite mode</b>:  Indicates if an existing table should be overwritten or if data should be appended.
+</li>
+<li> <b>set default varchar length</b>:  Set varchar columns to default length.
+</li>
+<li> <b>default varchar length</b>:  Default length of varchar columns.
+</li>
+<li> <b>add generated primary keys</b>:  Indicates whether a new attribute holding the auto generated primary keys is added to the result set.
+</li>
+<li> <b>db key attribute name</b>:  The name of the attribute for the auto generated primary keys
+</li>
+</ul><br/><h4> <span class="mw-headline" id="ExampleProcess"> ExampleProcess </span>
+</h4><br/><div>
+</div>
+</body>
+</html>

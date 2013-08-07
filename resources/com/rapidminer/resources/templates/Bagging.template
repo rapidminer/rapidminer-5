@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<process version="5.0">
+  <context>
+    <input/>
+    <output/>
+    <macros/>
+  </context>
+  <operator activated="true" class="process" expanded="true" name="Root">
+    <description>This process uses a meta learning scheme. For all meta learners, the inner learner is specified as operator child. In this case we use Bagging together with the base learner DecisionStump.</description>
+    <parameter key="logverbosity" value="3"/>
+    <parameter key="random_seed" value="2001"/>
+    <parameter key="send_mail" value="1"/>
+    <parameter key="process_duration_for_mail" value="30"/>
+    <parameter key="encoding" value="SYSTEM"/>
+    <process expanded="true" height="566" width="900">
+      <operator activated="true" class="retrieve" expanded="true" height="60" name="Retrieve" width="90" x="45" y="30"/>
+      <operator activated="true" class="bagging" expanded="true" height="76" name="Bagging" width="90" x="179" y="30">
+        <parameter key="sample_ratio" value="0.9"/>
+        <parameter key="iterations" value="10"/>
+        <parameter key="average_confidences" value="true"/>
+        <parameter key="use_local_random_seed" value="false"/>
+        <parameter key="local_random_seed" value="1992"/>
+        <process expanded="true" height="584" width="918">
+          <operator activated="true" class="decision_tree" expanded="true" height="76" name="DecisionTree" width="90" x="45" y="30">
+            <parameter key="criterion" value="gain_ratio"/>
+            <parameter key="minimal_size_for_split" value="4"/>
+            <parameter key="minimal_leaf_size" value="2"/>
+            <parameter key="minimal_gain" value="0.1"/>
+            <parameter key="maximal_depth" value="20"/>
+            <parameter key="confidence" value="0.25"/>
+            <parameter key="number_of_prepruning_alternatives" value="3"/>
+            <parameter key="no_pre_pruning" value="false"/>
+            <parameter key="no_pruning" value="false"/>
+          </operator>
+          <connect from_port="training set" to_op="DecisionTree" to_port="training set"/>
+          <connect from_op="DecisionTree" from_port="model" to_port="model"/>
+          <portSpacing port="source_training set" spacing="0"/>
+          <portSpacing port="sink_model" spacing="0"/>
+        </process>
+      </operator>
+      <connect from_op="Retrieve" from_port="output" to_op="Bagging" to_port="training set"/>
+      <connect from_op="Bagging" from_port="model" to_port="result 1"/>
+      <portSpacing port="source_input 1" spacing="0"/>
+      <portSpacing port="sink_result 1" spacing="0"/>
+      <portSpacing port="sink_result 2" spacing="0"/>
+    </process>
+  </operator>
+  <title>Bagging</title>
+  <description>Wraps a Bagging algorithm around a decision tree base learner.</description>
+  <template-group>Meta Learning</template-group>
+  <template-parameters>
+    <template-parameter>
+      <operator>Bagging</operator>
+      <parameter>iterations</parameter>
+    </template-parameter>
+    <template-parameter>
+      <operator>Bagging</operator>
+      <parameter>sample_ratio</parameter>
+    </template-parameter>
+    <template-parameter>
+      <operator>Retrieve</operator>
+      <parameter>repository_entry</parameter>
+    </template-parameter>
+  </template-parameters>
+</process>

@@ -1,0 +1,6 @@
+Changes from RapidMiner 5.3.7 to 5.3.8
+--------------------------------------
+* Plugins can hook into the operator and port context menus to add own entries
+* BUGFIX: Fixed memory leak in the "Fill Data Gaps" operator
+* BUGFIX: Fixed error in regular expression dialog
+* BUGFIX: Several fixes and improvements for the data import wizard* BUGFIX: Ignoring missings in the count function will actually ignore the missings in the count and will not display missing for the whole group

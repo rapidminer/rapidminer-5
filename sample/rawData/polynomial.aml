@@ -1,0 +1,39 @@
+<attributeset default_source="polynomial.dat">
+
+  <attribute
+    name      = "a1"
+    sourcecol = "1"
+    valuetype = "real"
+  />
+  
+  <attribute
+    name      = "a2"
+    sourcecol = "2"
+    valuetype = "real"
+  />
+  
+  <attribute
+    name      = "a3"
+    sourcecol = "3"
+    valuetype = "real"
+  />
+  
+  <attribute
+    name      = "a4"
+    sourcecol = "4"
+    valuetype = "real"
+  />
+  
+  <attribute
+    name      = "a5"
+    sourcecol = "5"
+    valuetype = "real"
+  />
+  
+  <label
+    name      = "label"
+    sourcecol = "6"
+    valuetype = "real"
+  />
+  
+</attributeset>

@@ -1,0 +1,21 @@
+Changes from RapidMiner 5.1 to 5.2
+----------------------------------
+* Added "Advanced Charts" view 
+* Added "File" objects to pass to reader operators. 
+  - Added operators to open files and URL connections
+  - Added operators to iterate ZIP files
+* Superset and Union operator can handle special attributes
+* Catch block subprocess for Handle Exception operator
+* Database connections can define driver properties 
+* XML import
+* Join operator can operate on multiple columns
+* Easier bug reporting: Direct connection to Bugzilla
+* Added new Operators:
+  - Denormalization Operator
+  - Remove Unused Values Operator
+  - Loop Repository
+  - Open File, Write File, Loop Zip-File Entries
+  - Read Excel with Format
+* Aggregation Operator now supports default Aggregation for a set of attributes and is implemented more efficiently
+* The last edited process can now be restored after RapidMiner has terminated abnormally
+

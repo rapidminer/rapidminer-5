@@ -1,0 +1,112 @@
+RAPID MINER 5.0 INSTALLATION NOTES
+----------------------------------
+
+This file describes the installation of RapidMiner on your machine. You may
+install RapidMiner for all users of your system or for your own account 
+locally.
+
+Basically, there are two different ways of installing RapidMiner:
+
+* Installation of a Windows executable
+* Installation of a Java version (any platform)
+
+Both ways are described below. More information about the installation 
+of RapidMiner can be found at http://rapid-i.com
+
+
+Installation of the Windows executable
+--------------------------------------
+
+Just perform a double click on the downloaded file 
+  
+     rapidminer-XXX-install.exe
+     
+and follow the installation instructions. As a result, there will be
+a new menu entry in the Windows startmenu. RapidMiner is started by 
+clicking this entry.
+
+
+Installation of the Java version
+--------------------------------
+
+We assume that you have managed to unpack your downloaded archive,
+because otherwise you would not be able to read these lines. 
+
+The directory that was created contains the following files and
+directories:
+
+	scripts/*   Executable start scripts
+	lib/		Java libraries and jar files
+	lib/plugins	RapidMiner plugins
+	etc/		Configuration and template files
+	sample/*	sample experiments
+	sample/data	sample data
+    src/        java sources (source version only)
+	INSTALL.txt this file
+	README.*	Readme files for used libraries
+	LICENSE.txt	The GNU public license
+	CHANGES.txt	Changes from previous versions
+
+1. Make sure you have Java installed. RapidMiner runs on Java 7.0 
+   (aka 1.7) or higher. Type "java -version" on the command line to 
+   figure out your Java version. A Java Runtime Environment can 
+   be downloaded from http://java.sun.com/
+   Make sure your JAVA_HOME environment variable is set to point to
+   the correct location (i.e. the installation directory of Java).
+
+2. You can start RapidMiner using the executable jar file 
+   lib/rapidminer.jar. On some operating systems, double clicking 
+   on lib/rapidminer.jar starts RapidMiner.
+   If that does not work, you can try typing something like
+       java -jar lib/rapidminer.jar
+   If that does not work, you can use the start scripts in the 
+   scripts directory. On a MS Windows system use 
+   scripts\rapidminer.bat and scripts\RapidMinerGUI.bat, 
+   on a Unix system use scripts/rapidminer and scripts/RapidMinerGUI.
+   
+   Please note that you might have to set the executable flags on
+   Unix systems for these scripts before you can use them. 
+
+   (Optional) If you want to run RapidMiner from anywhere on your 
+   system, add the scripts directory to your path.
+
+3. Test your installation. Use
+ 
+   scripts/rapidminer PROCESS   
+   
+                             to execute an process with the
+                             command line version. You can use one
+			                 of the samples from the samples 
+			                 directory.
+			                 
+   scripts/RapidMinerGUI     
+                         
+                             to start the graphical user interface 
+                             of RapidMiner (or make a double click on
+                             lib/rapidminer.jar if this works on your 
+                             operating system).
+
+4. If you have downloaded any of the additional RapidMiner plugins, just
+   copy the <plugin_name>.jar file to the directory lib/plugins.
+
+5. If you downloaded the source version, you can compile the sources 
+   using 'ant build' or 'ant dist'. Ant is a java build tool (like 
+   'make') and can be downloaded from http://jakarta.apache.org/ant/
+   RapidMiner requires Ant version 1.6 or higher.
+
+
+NOTE ON CONFIGURATION FILES:
+----------------------------
+RapidMiner looks for the following configuration files and reads them in 
+this ordering
+
+  RAPID_MINER_HOME/rapidminerrc
+  RAPID_MINER_HOME/rapidminerrc.OSNAME
+  ~/.RapidMiner5/<VERSION>rapidminerrc
+  ~/.RapidMiner5/<VERSION>rapidminerrc.<OSNAME>
+  rapidminerrc
+  rapidminerrc.<OSNAME>
+
+Where <OSNAME> is the name of your operating system, <VERSION> the current
+version and ~ is your home directory. You can see which files are read 
+when RapidMiner starts.

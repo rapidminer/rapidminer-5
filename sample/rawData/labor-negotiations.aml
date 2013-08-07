@@ -1,0 +1,128 @@
+<attributeset default_source="labor-negotiations.dat">
+
+  <attribute
+    name      = "duration"
+    sourcecol = "1"
+    valuetype = "integer"
+  />
+  
+  <attribute
+    name      = "wage-inc-1st"
+    sourcecol = "2"
+    valuetype = "real"
+  />
+  
+  <attribute
+    name      = "wage-inc-2nd"
+    sourcecol = "3"
+    valuetype = "real"
+  />
+  
+  <attribute
+    name      = "wage-inc-3rd"
+    sourcecol = "4"
+    valuetype = "real"
+  />
+  
+  <attribute
+    name      = "col-adj"
+    sourcecol = "5"
+    valuetype = "nominal">
+    <value>tcf</value>
+    <value>none</value>
+    <value>tc</value>
+  </attribute>
+  
+  <attribute
+    name      = "working-hours"
+    sourcecol = "6"
+    valuetype = "integer"
+  />
+  
+  <attribute
+    name      = "pension"
+    sourcecol = "7"
+    valuetype = "nominal">
+    <value>none</value>
+    <value>empl_contr</value>
+    <value>ret_allw</value>
+  </attribute>
+  
+  <attribute
+    name      = "standby-pay"
+    sourcecol = "8"
+    valuetype = "integer"
+  />
+  
+  <attribute
+    name      = "shift-differential"
+    sourcecol = "9"
+    valuetype = "integer"
+  />
+  
+  <attribute
+    name      = "education-allowance"
+    sourcecol = "10"
+    valuetype = "nominal">
+    <value>no</value>
+    <value>yes</value>
+  </attribute>
+  
+  <attribute
+    name      = "statutory-holidays"
+    sourcecol = "11"
+    valuetype = "integer"
+  />
+  
+  <attribute
+    name      = "vacation"
+    sourcecol = "12"
+    valuetype = "nominal">
+    <value>generous</value>
+    <value>below-average</value>
+    <value>average</value>
+  </attribute>
+  
+  <attribute
+    name      = "longterm-disability-assistance"
+    sourcecol = "13"
+    valuetype = "nominal">
+    <value>no</value>
+    <value>yes</value>
+  </attribute>
+  
+  <attribute
+    name      = "contrib-to-dental-plan"
+    sourcecol = "14"
+    valuetype = "nominal">
+    <value>none</value>
+    <value>half</value>
+    <value>full</value>
+  </attribute>
+  
+  <attribute
+    name      = "bereavement-assistance"
+    sourcecol = "15"
+    valuetype = "nominal">
+    <value>no</value>
+    <value>yes</value>    
+  </attribute>
+  
+  <attribute
+    name      = "contrib-to-health-plan"
+    sourcecol = "16"
+    valuetype = "nominal">
+    <value>none</value>
+    <value>half</value>
+    <value>full</value>
+  </attribute>
+  
+  <label
+    name      = "class"
+    sourcecol = "17"
+    valuetype = "nominal">
+    <value>bad</value>
+    <value>good</value>    
+  </label>
+  
+</attributeset>

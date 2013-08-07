@@ -1,0 +1,18 @@
+Changes from RapidMiner 5.3.0 to 5.3.5
+--------------------------------------
+* Changed drop target highlighting color from light-blue to light-orange
+* Process panel will not be highlighted anymore when dragging folders from the Repository View
+* Added a GUI preference option for drag target highlighting. Now it is possible to select whether the full target, the target's border or nothing at all should be highlighted.
+* In the Repository View it is no longer possible to drag Repositories.
+* Process size is now automatically adjusted when entering a subprocess or when loading a process.
+* When installing extensions, all licenses can be accepted with one click in a new license dialog.
+* Default connection timeout settings changed
+* BUGFIX: Recursive creation of parent directories works properly again in all cases 
+* BUGFIX: 32-bit Windows version of RapidMiner will now have more than 64 MB memory available when installed on a x64 system
+* BUGFIX: Write Database operator table name parameter allows custom names again
+* BUGFIX: Fixed disabled operator not always being activated when connected
+* BUGFIX: Fixed "Click to branch" popup sometimes appearing at the wrong position
+* BUGFIX: Errors during Repository movements should no longer break RapidMiner in headless mode
+* BUGFIX: Fixed some error messages and dialogs
+* BUGFIX: Process is no longer marked as changed when entering a subprocess
+* BUGFIX: Loading documentation from Wiki never blocks UI

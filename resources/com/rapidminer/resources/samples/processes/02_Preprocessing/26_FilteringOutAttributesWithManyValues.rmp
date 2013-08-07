@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<process version="5.0">
+  <context>
+    <input/>
+    <output/>
+    <macros/>
+  </context>
+  <operator activated="true" class="process" expanded="true" name="Root">
+    <parameter key="logverbosity" value="3"/>
+    <parameter key="random_seed" value="2001"/>
+    <parameter key="send_mail" value="1"/>
+    <parameter key="process_duration_for_mail" value="30"/>
+    <parameter key="encoding" value="SYSTEM"/>
+    <process expanded="true" height="558" width="882">
+      <operator activated="true" class="subprocess" expanded="true" height="76" name="OperatorChain" width="90" x="45" y="30">
+        <process expanded="true" height="576" width="806">
+          <operator activated="true" class="generate_nominal_data" expanded="true" height="60" name="NominalExampleSetGenerator" width="90" x="45" y="30">
+            <parameter key="number_examples" value="100"/>
+            <parameter key="number_of_attributes" value="10"/>
+            <parameter key="number_of_values" value="20"/>
+            <parameter key="use_local_random_seed" value="false"/>
+            <parameter key="local_random_seed" value="-1"/>
+          </operator>
+          <operator activated="true" class="sample" expanded="true" height="76" name="Sample" width="90" x="180" y="30">
+            <parameter key="sample" value="0"/>
+            <parameter key="sample_size" value="20"/>
+            <parameter key="sample_ratio" value="0.1"/>
+            <parameter key="sample_probability" value="0.1"/>
+            <parameter key="use_local_random_seed" value="false"/>
+            <parameter key="local_random_seed" value="-1"/>
+          </operator>
+          <operator activated="true" class="guess_types" expanded="true" height="76" name="GuessValueTypes" width="90" x="313" y="30">
+            <parameter key="attribute_filter_type" value="0"/>
+            <parameter key="attribute" value=""/>
+            <parameter key="use_except_expression" value="false"/>
+            <parameter key="value_type" value="0"/>
+            <parameter key="use_value_type_exception" value="false"/>
+            <parameter key="except_value_type" value="11"/>
+            <parameter key="block_type" value="0"/>
+            <parameter key="use_block_type_exception" value="false"/>
+            <parameter key="except_block_type" value="8"/>
+            <parameter key="invert_selection" value="false"/>
+            <parameter key="include_special_attributes" value="false"/>
+            <parameter key="decimal_point_character" value="."/>
+          </operator>
+          <connect from_op="NominalExampleSetGenerator" from_port="output" to_op="Sample" to_port="example set input"/>
+          <connect from_op="Sample" from_port="example set output" to_op="GuessValueTypes" to_port="example set input"/>
+          <connect from_op="GuessValueTypes" from_port="example set output" to_port="out 1"/>
+          <portSpacing port="source_in 1" spacing="0"/>
+          <portSpacing port="sink_out 1" spacing="0"/>
+          <portSpacing port="sink_out 2" spacing="0"/>
+        </process>
+      </operator>
+      <operator activated="true" class="loop_attributes" expanded="true" height="60" name="FeatureIterator" width="90" x="180" y="30">
+        <parameter key="attribute_filter_type" value="0"/>
+        <parameter key="attribute" value=""/>
+        <parameter key="use_except_expression" value="false"/>
+        <parameter key="value_type" value="0"/>
+        <parameter key="use_value_type_exception" value="false"/>
+        <parameter key="except_value_type" value="11"/>
+        <parameter key="block_type" value="0"/>
+        <parameter key="use_block_type_exception" value="false"/>
+        <parameter key="except_block_type" value="8"/>
+        <parameter key="invert_selection" value="false"/>
+        <parameter key="include_special_attributes" value="false"/>
+        <parameter key="iteration_macro" value="loop_feature"/>
+        <process expanded="true">
+          <operator activated="true" class="set_macro" expanded="true" name="SingleMacroDefinition">
+            <parameter key="macro" value="value_counter"/>
+            <parameter key="value" value="0"/>
+          </operator>
+          <operator activated="true" class="loop_values" expanded="true" name="ValueIterator">
+            <parameter key="attribute" value="%{loop_feature}"/>
+            <parameter key="iteration_macro" value="loop_value"/>
+            <process expanded="true">
+              <operator activated="true" class="generate_macro" expanded="true" name="MacroConstruction">
+                <list key="function_descriptions">
+                  <parameter key="value_counter" value="%{value_counter} + 1"/>
+                </list>
+                <parameter key="use_standard_constants" value="true"/>
+              </operator>
+              <connect from_port="example set" to_op="MacroConstruction" to_port="through 1"/>
+              <connect from_op="MacroConstruction" from_port="through 1" to_port="out 1"/>
+              <portSpacing port="source_example set" spacing="0"/>
+              <portSpacing port="sink_out 1" spacing="0"/>
+              <portSpacing port="sink_out 2" spacing="0"/>
+            </process>
+          </operator>
+          <operator activated="true" class="provide_macro_as_log_value" expanded="true" name="Macro2Log">
+            <parameter key="macro_name" value="value_counter"/>
+          </operator>
+          <operator activated="true" class="log" expanded="true" name="ProcessLog">
+            <list key="log">
+              <parameter key="Feature" value="operator.FeatureIterator.value.feature_name"/>
+              <parameter key="Count" value="operator.Macro2Log.value.macro_value"/>
+            </list>
+            <parameter key="sorting_type" value="0"/>
+            <parameter key="sorting_k" value="100"/>
+            <parameter key="persistent" value="false"/>
+          </operator>
+          <connect from_port="example set" to_op="SingleMacroDefinition" to_port="through 1"/>
+          <connect from_op="SingleMacroDefinition" from_port="through 1" to_op="ValueIterator" to_port="example set"/>
+          <connect from_op="ValueIterator" from_port="out 1" to_op="Macro2Log" to_port="through 1"/>
+          <connect from_op="Macro2Log" from_port="through 1" to_op="ProcessLog" to_port="through 1"/>
+          <portSpacing port="source_example set" spacing="0"/>
+          <portSpacing port="sink_example set" spacing="0"/>
+        </process>
+      </operator>
+      <operator activated="true" class="log_to_data" expanded="true" height="94" name="ProcessLog2ExampleSet" width="90" x="45" y="165">
+        <parameter key="log_name" value="ProcessLog"/>
+      </operator>
+      <operator activated="true" class="clear_log" expanded="true" height="94" name="ClearProcessLog" width="90" x="179" y="165">
+        <parameter key="log_name" value="ProcessLog"/>
+        <parameter key="delete_table" value="true"/>
+      </operator>
+      <operator activated="true" class="guess_types" expanded="true" height="76" name="GuessValueTypes (2)" width="90" x="313" y="165">
+        <parameter key="attribute_filter_type" value="0"/>
+        <parameter key="attribute" value=""/>
+        <parameter key="use_except_expression" value="false"/>
+        <parameter key="value_type" value="0"/>
+        <parameter key="use_value_type_exception" value="false"/>
+        <parameter key="except_value_type" value="11"/>
+        <parameter key="block_type" value="0"/>
+        <parameter key="use_block_type_exception" value="false"/>
+        <parameter key="except_block_type" value="8"/>
+        <parameter key="invert_selection" value="false"/>
+        <parameter key="include_special_attributes" value="false"/>
+        <parameter key="decimal_point_character" value="."/>
+      </operator>
+      <operator activated="true" class="filter_examples" expanded="true" height="76" name="ExampleFilter" width="90" x="447" y="165">
+        <parameter key="condition_class" value="attribute_value_filter"/>
+        <parameter key="parameter_string" value="Count &gt; 12"/>
+        <parameter key="invert_filter" value="false"/>
+      </operator>
+      <operator activated="true" class="remember" expanded="true" height="60" name="IOStorer" width="90" x="313" y="255">
+        <parameter key="name" value="original_data"/>
+        <parameter key="io_object" value="ExampleSet"/>
+        <parameter key="store_which" value="2"/>
+        <parameter key="remove_from_process" value="true"/>
+      </operator>
+      <operator activated="true" class="loop_values" expanded="true" height="76" name="ValueIterator (2)" width="90" x="581" y="165">
+        <parameter key="attribute" value="Feature"/>
+        <parameter key="iteration_macro" value="loop_value"/>
+        <process expanded="true">
+          <operator activated="true" class="recall" expanded="true" name="IORetriever">
+            <parameter key="name" value="original_data"/>
+            <parameter key="io_object" value="ExampleSet"/>
+            <parameter key="remove_from_store" value="true"/>
+          </operator>
+          <operator activated="true" class="select_attributes" expanded="true" name="Select Attributes">
+            <parameter key="attribute_filter_type" value="regular_expression"/>
+            <parameter key="attribute" value=""/>
+            <parameter key="regular_expression" value="%{loop_value}"/>
+            <parameter key="use_except_expression" value="false"/>
+            <parameter key="value_type" value="0"/>
+            <parameter key="use_value_type_exception" value="false"/>
+            <parameter key="except_value_type" value="11"/>
+            <parameter key="block_type" value="0"/>
+            <parameter key="use_block_type_exception" value="false"/>
+            <parameter key="except_block_type" value="8"/>
+            <parameter key="invert_selection" value="true"/>
+            <parameter key="include_special_attributes" value="false"/>
+          </operator>
+          <operator activated="true" class="remember" expanded="true" name="IOStorer (2)">
+            <parameter key="name" value="original_data"/>
+            <parameter key="io_object" value="ExampleSet"/>
+            <parameter key="store_which" value="1"/>
+            <parameter key="remove_from_process" value="true"/>
+          </operator>
+          <connect from_port="example set" to_port="out 1"/>
+          <connect from_op="IORetriever" from_port="result" to_op="Select Attributes" to_port="example set input"/>
+          <connect from_op="Select Attributes" from_port="example set output" to_op="IOStorer (2)" to_port="store"/>
+          <portSpacing port="source_example set" spacing="0"/>
+          <portSpacing port="sink_out 1" spacing="0"/>
+          <portSpacing port="sink_out 2" spacing="0"/>
+        </process>
+      </operator>
+      <operator activated="true" class="recall" expanded="true" height="60" name="IORetriever (2)" width="90" x="782" y="30">
+        <parameter key="name" value="original_data"/>
+        <parameter key="io_object" value="ExampleSet"/>
+        <parameter key="remove_from_store" value="true"/>
+      </operator>
+      <connect from_op="OperatorChain" from_port="out 1" to_op="FeatureIterator" to_port="example set"/>
+      <connect from_op="FeatureIterator" from_port="example set" to_op="ProcessLog2ExampleSet" to_port="through 1"/>
+      <connect from_op="ProcessLog2ExampleSet" from_port="exampleSet" to_op="ClearProcessLog" to_port="through 1"/>
+      <connect from_op="ProcessLog2ExampleSet" from_port="through 1" to_op="ClearProcessLog" to_port="through 2"/>
+      <connect from_op="ClearProcessLog" from_port="through 1" to_op="GuessValueTypes (2)" to_port="example set input"/>
+      <connect from_op="ClearProcessLog" from_port="through 2" to_op="IOStorer" to_port="store"/>
+      <connect from_op="GuessValueTypes (2)" from_port="example set output" to_op="ExampleFilter" to_port="example set input"/>
+      <connect from_op="ExampleFilter" from_port="example set output" to_op="ValueIterator (2)" to_port="example set"/>
+      <connect from_op="IORetriever (2)" from_port="result" to_port="result 2"/>
+      <portSpacing port="source_input 1" spacing="0"/>
+      <portSpacing port="sink_result 2" spacing="0"/>
+      <portSpacing port="sink_result 1" spacing="0"/>
+    </process>
+  </operator>
+</process>

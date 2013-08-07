@@ -1,0 +1,11 @@
+Changes from RapidMiner 5.3.8 to 5.3.9
+--------------------------------------
+* Added rm.log logfile in .RapidMiner5 folder (found in the user home folder) for easier error diagnosis.
+  The log will be overwritten each time RapidMiner is started.
+* BUGFIX: Fixed some operators only showing the Annotations renderer in the results view, e.g. the Generalized Sequential Patterns operator
+* BUGFIX: Fixed 'Update Database' operator to also work when all attributes are set as ID attributes
+* BUGFIX: Disabling an operator which contains operators in a subprocess no longer disables its inner operators
+* BUGFIX: Pasting process xml into the XML View and clicking "Apply" will now also work when whitespaces have been inserted before the xml
+* BUGFIX: Exporting images/pdfs is more robust now
+* BUGFIX: Fixed 'Send Mail' operator failing with SMTP passwords set
+* BUGFIX: Fixed visual glitch when editing a metadata column header in the Import Wizards and resizing a left-handed column at the same time

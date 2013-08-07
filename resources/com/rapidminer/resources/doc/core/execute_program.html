@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" dir="ltr"><head><table cellpadding=0 cellspacing=0><tr><td><img src="icon:///24/console.png" /></td><td width="5"></td><td><h2 class="firstHeading" id="firstHeading">Execute Program</h4></td></tr></table><hr noshade="true"></head>
+<body class="mediawiki ltr ns-0 ns-subject page-Execute_Program skin-monobook">
+<div id="content">
+	
+	
+	
+	<div id="bodyContent">
+		
+		
+		
+		
+<div id="synopsis">
+<h4>
+<span class="mw-headline" id="Synopsis">Synopsis</span>
+</h4>
+<p>
+This operator simply executes a command in a shell of the underlying operating system, basically any system command or external program.
+</p>
+</div><br/><h4> <span class="mw-headline" id="Description"> Description </span>
+</h4>
+<p>
+This operator executes a system command. The command and all its arguments are specified by the parameter <code>command</code>. The standard output stream and the error stream of the process can be redirected to the logfile. 
+
+Please note also that the command is system dependent. Characters that have special meaning on the shell like e.g. the pipe symbol or brackets and braces do not have a special meaning to Java. 
+
+The method <code>Runtime.exec(String)</code> is used to execute the command. Please note, that this (Java) method parses the string into tokens before it is executed. These tokens are <i>not</i> interpreted by a shell (which?). If the desired command involves piping, redirection or other shell features, it is best to create a small shell script to handle this.
+</p>
+<p>
+
+
+&lt;p&gt;
+A hint for Windows / MS DOS users: simple commands should be preceeded by <code>cmd /c call</code>, eg. <code>cmd /c notepad</code>  or just <code>notepad</code> in case you are executing a program and not just a shell command. Then Windows opens a new shell, executes the command, and closes the shell again. However, Windows 7 does not open a new shell, it just executes the command. 
+
+&lt;p&gt;
+Another option would be to preceed the command with <code>cmd /c start</code> which opens the shell and keeps it open. The rest process will not be executed until the shell is closed by the user. 
+</p><br/><h4> <span class="mw-headline" id="Input"> Input </span>
+</h4>
+
+<ul class="ports">
+<li> <b>through 1</b>:
+</li>
+</ul><br/><h4> <span class="mw-headline" id="Output"> Output </span>
+</h4>
+
+<ul class="ports">
+<li> <b>through 1</b>:
+</li>
+</ul><br/><h4> <span class="mw-headline" id="Parameters"> Parameters </span>
+</h4>
+
+<ul class="ports">
+<li> <b>command</b>:  Command to execute.
+</li>
+<li> <b>log stdout</b>:  If set to true, the stdout stream of the command is redirected to the logfile.
+</li>
+<li> <b>log stderr</b>:  If set to true, the stderr stream of the command is redirected to the logfile.
+</li>
+</ul><br/><h4> <span class="mw-headline" id="ExampleProcess"> ExampleProcess </span>
+</h4><br/><div>
+</div>
+</body>
+</html>

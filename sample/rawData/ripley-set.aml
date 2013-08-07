@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="windows-1252"?>
+<attributeset default_source="ripley-set.dat">
+  <attribute
+    name       = "att1"
+    sourcecol  = "1"
+    valuetype  = "real"/>
+
+  <attribute
+    name       = "att2"
+    sourcecol  = "2"
+    valuetype  = "real"/>
+
+  <label
+    name       = "label"
+    sourcecol  = "3"
+    valuetype  = "nominal">
+    <value>0</value>
+    <value>1</value>
+  </label>
+
+</attributeset>

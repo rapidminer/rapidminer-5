@@ -1,0 +1,40 @@
+<attributeset default_source="golf.test_with_label.data">
+
+  <attribute 
+     name      = "Outlook" 
+     sourcecol = "1" 
+     valuetype = "nominal">
+     <value>rain</value>
+     <value>overcast</value>
+     <value>sunny</value>
+  </attribute>
+  
+  <attribute 
+     name      = "Temperature" 
+     sourcecol = "2" 
+     valuetype = "integer"
+  />
+  
+  <attribute 
+     name      = "Humidity" 
+     sourcecol = "3" 
+     valuetype = "integer"
+  />
+  
+  <attribute 
+     name      = "Wind" 
+     sourcecol = "4" 
+     valuetype = "nominal">
+     <value>true</value>
+     <value>false</value>
+  </attribute>
+  
+  <label
+     name      = "Play" 
+     sourcecol = "5" 
+     valuetype = "nominal">
+     <value>no</value>
+     <value>yes</value>
+  </label>
+  
+</attributeset>

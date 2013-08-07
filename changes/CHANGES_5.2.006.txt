@@ -1,0 +1,11 @@
+Changes from RapidMiner 5.2.3 to 5.2.6
+--------------------------------------
+* Read SAS operator
+* Added timezone parameter to Date to Nominal operator
+* Excel 2007 support
+* Dialog for editing cron expressions
+* Dialog to see preview for regular expressions
+* Update Database operator
+* Easier mechanism for Extensions to create configurable items
+* Japanese and German translation
+

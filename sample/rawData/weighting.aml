@@ -1,0 +1,18 @@
+<attributeset default_source="weighting.dat">
+
+  <attribute
+    name          = "att1"
+    sourcecol     = "1"
+    sourcecol_end = "6"
+    valuetype     = "real"
+  />
+  
+  <label
+    name          = "label"
+    sourcecol     = "7"
+    valuetype     = "nominal">
+    <value>negative</value>
+    <value>positive</value>    
+  </label>
+  
+</attributeset>

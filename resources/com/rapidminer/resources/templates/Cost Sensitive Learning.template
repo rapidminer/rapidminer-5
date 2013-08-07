@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<process version="5.0">
+  <context>
+    <input/>
+    <output/>
+    <macros/>
+  </context>
+  <operator activated="true" class="process" expanded="true" name="Root">
+    <description>&lt;p&gt;This process is another example for cost sensitive learning, i.e. for a case where different prediction errors would cause different costs. Beside the preprocessing operator ThresholdFinder, which is also able to deliver ROC plots for two classes,  another operator exist which can be used for cost sensitive learning.&lt;/p&gt;&lt;p&gt;This operator is part of the Learner -- Meta group and is called MetaCost. It is used as any other meta learning scheme and must contain another inner learning operator, in this case the decision tree learner is used.&lt;/p&gt;&lt;p&gt;The cost matrix used for cost sensitive learning can be defined via the matrix editor (just press the button for the parameter cost_matrix of the MetaCost operator). The basic format for the parameter cost-matrix is [k11 ... k1m; k21 ... k2m; ... ; kn1 ... knm], e.g. for a 2x2 cost matrix of a binary classification problem [0 1; 10 0]. This example means that the costs for the error of predicting the first class as the second are ten times higher than the other error type.&lt;/p&gt;</description>
+    <parameter key="logverbosity" value="init"/>
+    <parameter key="random_seed" value="2001"/>
+    <parameter key="send_mail" value="1"/>
+    <parameter key="process_duration_for_mail" value="30"/>
+    <parameter key="encoding" value="SYSTEM"/>
+    <process expanded="true" height="584" width="918">
+      <operator activated="true" class="retrieve" expanded="true" height="60" name="Retrieve" width="90" x="45" y="30"/>
+      <operator activated="true" class="x_validation" expanded="true" height="112" name="XValidation" width="90" x="180" y="30">
+        <parameter key="create_complete_model" value="false"/>
+        <parameter key="average_performances_only" value="true"/>
+        <parameter key="leave_one_out" value="false"/>
+        <parameter key="number_of_validations" value="5"/>
+        <parameter key="sampling_type" value="2"/>
+        <parameter key="use_local_random_seed" value="false"/>
+        <parameter key="local_random_seed" value="1992"/>
+        <process expanded="true" height="534" width="360">
+          <operator activated="true" class="metacost" expanded="true" height="76" name="MetaCost" width="90" x="139" y="30">
+            <parameter key="cost_matrix" value="[0.0 1.0;10.0 0.0]"/>
+            <parameter key="use_subset_for_training" value="1.0"/>
+            <parameter key="iterations" value="10"/>
+            <parameter key="sampling_with_replacement" value="true"/>
+            <parameter key="use_local_random_seed" value="false"/>
+            <parameter key="local_random_seed" value="1992"/>
+            <process expanded="true" height="552" width="789">
+              <operator activated="true" class="decision_tree" expanded="true" height="76" name="DecisionTree" width="90" x="349" y="30">
+                <parameter key="criterion" value="gain_ratio"/>
+                <parameter key="minimal_size_for_split" value="4"/>
+                <parameter key="minimal_leaf_size" value="2"/>
+                <parameter key="minimal_gain" value="0.1"/>
+                <parameter key="maximal_depth" value="20"/>
+                <parameter key="confidence" value="0.25"/>
+                <parameter key="number_of_prepruning_alternatives" value="3"/>
+                <parameter key="no_pre_pruning" value="false"/>
+                <parameter key="no_pruning" value="false"/>
+              </operator>
+              <connect from_port="training set" to_op="DecisionTree" to_port="training set"/>
+              <connect from_op="DecisionTree" from_port="model" to_port="model"/>
+              <portSpacing port="source_training set" spacing="0"/>
+              <portSpacing port="sink_model" spacing="0"/>
+            </process>
+          </operator>
+          <connect from_port="training" to_op="MetaCost" to_port="training set"/>
+          <connect from_op="MetaCost" from_port="model" to_port="model"/>
+          <portSpacing port="source_training" spacing="0"/>
+          <portSpacing port="sink_model" spacing="0"/>
+          <portSpacing port="sink_through 1" spacing="0"/>
+        </process>
+        <process expanded="true" height="534" width="360">
+          <operator activated="true" class="apply_model" expanded="true" height="76" name="ModelApplier" width="90" x="45" y="30">
+            <list key="application_parameters"/>
+            <parameter key="create_view" value="false"/>
+          </operator>
+          <operator activated="true" class="performance" expanded="true" height="76" name="Performance" width="90" x="207" y="30">
+            <parameter key="use_example_weights" value="true"/>
+          </operator>
+          <connect from_port="model" to_op="ModelApplier" to_port="model"/>
+          <connect from_port="test set" to_op="ModelApplier" to_port="unlabelled data"/>
+          <connect from_op="ModelApplier" from_port="labelled data" to_op="Performance" to_port="labelled data"/>
+          <connect from_op="Performance" from_port="performance" to_port="averagable 1"/>
+          <portSpacing port="source_model" spacing="0"/>
+          <portSpacing port="source_test set" spacing="0"/>
+          <portSpacing port="source_through 1" spacing="0"/>
+          <portSpacing port="sink_averagable 1" spacing="0"/>
+          <portSpacing port="sink_averagable 2" spacing="0"/>
+        </process>
+      </operator>
+      <connect from_op="Retrieve" from_port="output" to_op="XValidation" to_port="training"/>
+      <connect from_op="XValidation" from_port="averagable 1" to_port="result 1"/>
+      <portSpacing port="source_input 1" spacing="0"/>
+      <portSpacing port="sink_result 1" spacing="0"/>
+      <portSpacing port="sink_result 2" spacing="0"/>
+    </process>
+  </operator>
+  <title>Cost Sensitive Learning</title>
+  <description>Uses the meta cost algorithm for cost sensitive learning. The costs matrix specifying the different error types (false positives / false negatives) can be configured as a parameter and the learning algorithm will be optimized with respect to these costs.</description>
+  <template-group>Model Optimization</template-group>
+  <template-parameters>
+    <template-parameter>
+      <operator>MetaCost</operator>
+      <parameter>cost_matrix</parameter>
+    </template-parameter>
+    <template-parameter>
+      <operator>Retrieve</operator>
+      <parameter>repository_entry</parameter>
+    </template-parameter>
+  </template-parameters>
+</process>

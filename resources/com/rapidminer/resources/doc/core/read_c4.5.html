@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" dir="ltr"><head><table cellpadding=0 cellspacing=0><tr><td><img src="icon:///24/import.png" /></td><td width="5"></td><td><h2 class="firstHeading" id="firstHeading">Read C4.5</h4></td></tr></table><hr noshade="true"></head>
+<body class="mediawiki ltr ns-0 ns-subject page-Read_C4_5 skin-monobook">
+<div id="content">
+	
+	
+	
+	<div id="bodyContent">
+		
+		
+		
+		
+<div id="synopsis">
+<h4>
+<span class="mw-headline" id="Synopsis">Synopsis</span>
+</h4>
+<p>
+This operator can read data and meta given in C4.5 format.
+</p>
+</div><br/><h4> <span class="mw-headline" id="Description"> Description </span>
+</h4>
+<p>
+Loads data given in C4.5 format (names and data file). Both files must be in the same directory. You can specify one of the C4.5 files (either the data or the names file) or only the filestem.
+</p>
+<p>
+For a dataset named "foo", you will have two files: foo.data and foo.names. The .names file describes the dataset, while the .data file contains the examples which make up the dataset.
+</p>
+<p>
+The files contain series of identifiers and numbers with some surrounding syntax. A | (vertical bar) means that the remainder of the line should be ignored as a comment. Each identifier consists of a string of characters that does not include comma, question mark or colon. Embedded whitespce is also permitted but multiple whitespace is replaced by a single space.
+</p>
+<p>
+The .names file contains a series of entries that describe the classes, attributes and values of the dataset. Each entry can be terminated with a period, but the period can be omited if it would have been the last thing on a line. The first entry in the file lists the names of the classes, separated by commas. Each successive line then defines an attribute, in the order in which they will appear in the .data file, with the following format:
+</p>
+<table class=pre border=0 bordercolor=black style=border-style:dashed; xml:space="preserve"> attribute-name : attribute-type </table> 
+<p>
+The attribute-name is an identifier as above, followed by a colon, then the attribute type which must be one of
+</p>
+
+<ul class="ports">
+<li> <code>continuous</code> If the attribute has a continuous value.
+</li>
+<li> <code>discrete [n]</code> The word 'discrete' followed by an integer which indicates how many values the attribute can take (not recommended, please use the method depicted below for defining nominal attributes).
+</li>
+<li> <code>[list of identifiers]</code> This is a discrete, i.e. nominal, attribute with the values enumerated (this is the prefered method for discrete attributes). The identifiers should be separated by commas.
+</li>
+<li> <code>ignore</code> This means that the attribute should be ignored - it won't be used. This is not supported by RapidMiner, please use one of the attribute selection operators after loading if you want to ignore attributes and remove them from the loaded example set.
+</li>
+</ul>
+<p>
+Here is an example .names file:
+</p>
+<table class=pre border=0 bordercolor=black style=border-style:dashed; xml:space="preserve"> good, bad. dur: continuous. wage1: continuous. wage2: continuous. wage3: continuous. cola: tc, none, tcf. hours: continuous. pension: empl_contr, ret_allw, none. stby_pay: continuous. shift_diff: continuous. educ_allw: yes, no. ... </table> 
+<p>
+Foo.data contains the training examples in the following format: one example per line, attribute values separated by commas, class last, missing values represented by "?". For example:
+</p>
+<table class=pre border=0 bordercolor=black style=border-style:dashed; xml:space="preserve"> 2,5.0,4.0,?,none,37,?,?,5,no,11,below_average,yes,full,yes,full,good 3,2.0,2.5,?,?,35,none,?,?,?,10,average,?,?,yes,full,bad 3,4.5,4.5,5.0,none,40,?,?,?,no,11,average,?,half,?,?,good 3,3.0,2.0,2.5,tc,40,none,?,5,no,10,below_average,yes,half,yes,full,bad ... </table>
+
+<h4> <span class="mw-headline" id="Input"> Input </span>
+</h4><br/><h4> <span class="mw-headline" id="Output"> Output </span>
+</h4>
+
+<ul class="ports">
+<li> <b>output</b>:
+</li>
+</ul><br/><h4> <span class="mw-headline" id="Parameters"> Parameters </span>
+</h4>
+
+<ul class="ports">
+<li> <b>c45 filestem</b>:  The path to either the C4.5 names file, the data file, or the filestem (without extensions). Both files must be in the same directory.
+</li>
+<li> <b>datamanagement</b>:  Determines, how the data is represented internally.
+</li>
+<li> <b>decimal point character</b>:  Character that is used as decimal point.
+</li>
+<li> <b>encoding</b>:  The encoding used for reading or writing files.
+</li>
+</ul><br/><h4> <span class="mw-headline" id="ExampleProcess"> ExampleProcess </span>
+</h4><br/><div>
+</div>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<process version="5.3.000">
+  <context>
+    <input/>
+    <output/>
+    <macros/>
+  </context>
+  <operator activated="true" class="process" compatibility="5.0.000" expanded="true" name="Root">
+    <description>The operator ExampleSetJoin in this process builds a join of two given example sets. Please note that attributes with equal names will be renamed during the joining process. The example sets must provide an Id attribute in order to determine corrsponding examples. After reaching the breakpoint you can inspect the input example sets. After resuming the process the joined example set will be the result.</description>
+    <parameter key="logverbosity" value="3"/>
+    <parameter key="random_seed" value="2001"/>
+    <parameter key="send_mail" value="1"/>
+    <parameter key="notification_email" value=""/>
+    <parameter key="process_duration_for_mail" value="30"/>
+    <parameter key="encoding" value="SYSTEM"/>
+    <process expanded="true" height="584" width="912">
+      <operator activated="true" class="generate_data" compatibility="5.0.000" expanded="true" height="60" name="FirstExampleSetGenerator" width="90" x="45" y="120">
+        <parameter key="target_function" value="sum classification"/>
+        <parameter key="number_examples" value="100"/>
+        <parameter key="number_of_attributes" value="5"/>
+        <parameter key="attributes_lower_bound" value="-10.0"/>
+        <parameter key="attributes_upper_bound" value="10.0"/>
+        <parameter key="use_local_random_seed" value="false"/>
+        <parameter key="local_random_seed" value="1992"/>
+        <parameter key="datamanagement" value="0"/>
+      </operator>
+      <operator activated="true" class="generate_id" compatibility="5.0.000" expanded="true" height="76" name="FirstIdTagging" width="90" x="179" y="120">
+        <parameter key="create_nominal_ids" value="false"/>
+        <parameter key="offset" value="0"/>
+      </operator>
+      <operator activated="true" class="generate_data" compatibility="5.0.000" expanded="true" height="60" name="SecondExampleSetGenerator" width="90" x="45" y="30">
+        <parameter key="target_function" value="sum classification"/>
+        <parameter key="number_examples" value="100"/>
+        <parameter key="number_of_attributes" value="10"/>
+        <parameter key="attributes_lower_bound" value="-10.0"/>
+        <parameter key="attributes_upper_bound" value="10.0"/>
+        <parameter key="use_local_random_seed" value="false"/>
+        <parameter key="local_random_seed" value="1992"/>
+        <parameter key="datamanagement" value="0"/>
+      </operator>
+      <operator activated="true" breakpoints="after" class="generate_id" compatibility="5.0.000" expanded="true" height="76" name="SecondIdTagging" width="90" x="179" y="30">
+        <parameter key="create_nominal_ids" value="false"/>
+        <parameter key="offset" value="0"/>
+      </operator>
+      <operator activated="true" class="join" compatibility="5.3.000" expanded="true" height="76" name="ExampleSetJoin" width="90" x="313" y="30">
+        <parameter key="remove_double_attributes" value="false"/>
+        <parameter key="join_type" value="0"/>
+        <parameter key="use_id_attribute_as_key" value="true"/>
+        <list key="key_attributes"/>
+        <parameter key="keep_both_join_attributes" value="false"/>
+      </operator>
+      <connect from_op="FirstExampleSetGenerator" from_port="output" to_op="FirstIdTagging" to_port="example set input"/>
+      <connect from_op="FirstIdTagging" from_port="example set output" to_op="ExampleSetJoin" to_port="right"/>
+      <connect from_op="SecondExampleSetGenerator" from_port="output" to_op="SecondIdTagging" to_port="example set input"/>
+      <connect from_op="SecondIdTagging" from_port="example set output" to_op="ExampleSetJoin" to_port="left"/>
+      <connect from_op="ExampleSetJoin" from_port="join" to_port="result 1"/>
+      <portSpacing port="source_input 1" spacing="0"/>
+      <portSpacing port="sink_result 1" spacing="0"/>
+      <portSpacing port="sink_result 2" spacing="0"/>
+    </process>
+  </operator>
+</process>

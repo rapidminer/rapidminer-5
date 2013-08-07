@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="windows-1252"?>
+<attributeset default_source="transactions.dat">
+  <attribute
+    name       = "CAR"
+    sourcecol  = "1"
+    valuetype  = "nominal">
+    <value>true</value>
+    <value>false</value>
+  </attribute>
+
+  <attribute
+    name       = "APPARTEMENT"
+    sourcecol  = "2"
+    valuetype  = "nominal">
+    <value>true</value>
+    <value>false</value>
+  </attribute>
+
+  <attribute
+    name       = "VILLA"
+    sourcecol  = "3"
+    valuetype  = "nominal">
+    <value>true</value>
+    <value>false</value>
+  </attribute>
+
+  <attribute
+    name       = "POOR"
+    sourcecol  = "4"
+    valuetype  = "nominal">
+    <value>true</value>
+    <value>false</value>
+  </attribute>
+
+  <attribute
+    name       = "AVERAGE"
+    sourcecol  = "5"
+    valuetype  = "nominal">
+    <value>true</value>
+    <value>false</value>
+  </attribute>
+
+  <attribute
+    name       = "RICH"
+    sourcecol  = "6"
+    valuetype  = "nominal">
+    <value>true</value>
+    <value>false</value>
+  </attribute>
+
+</attributeset>

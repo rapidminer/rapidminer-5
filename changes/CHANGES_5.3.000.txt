@@ -1,0 +1,128 @@
+Changes from RapidMiner 5.2.8 to 5.3.0
+--------------------------------------
+* Development JDK was switched to Java 7 but code still is compatible with Java 6.
+* Added new and improved extensive documentation (often including tutorial processes) for almost all operators
+* Added improved RapidAnalytics support. New run button: "Run process on RapidAnalytics".
+  Can only be used if the process is stored on a RapidAnalytics repository.
+  Instantly runs the process on the RapidAnalytics server the process is stored on
+* Connecting ports in reverse order is possible now (Input port -> output port)
+* Run on RapidAnalytics-Dialog can choose execution queue
+* New operators: Create Archive File and Add Entry to Archive File allow to create zip files
+* New operator: Performance to Data
+* New operator: Throw Exception
+* New file system operators: Copy File, Move File, Delete File, Rename File, Create Directory
+* New operators for handling annotations: Annotate, Annotations to Data, Data to Annotations, Extract Macro from Annotation
+* Aggregate: new aggregation functions: sum (fractional), count (fractional), count (percentage) and string concatenation
+* Execute Program operator has File Object ports for stdin, stdout, stderr
+* Loop Attributes: new output port which collects the data from all iterations 
+* Macros can be passed through the command line. Example: 'rapidminer //repository/home/test/process -Mkey1=value "-Mkey2=value with spaces"' will provide two macros named key1 and key2
+* Result Perspective: Added button in top right corner of a result tab to close all open results at once
+* Repositories View: Added button which navigates to the repository location of the currently opened process
+* Repositories View: Added popup menu item to open the selected entry in the OS file browser (only for Local Repositories)
+* Added new view: 'Macros': This view shows macros and their values in real time during process execution
+* More consistent handling of input sinks and output sinks of processes and subprocesses:
+>(1)Sinks can be moved up or down by dragging them with the left mouse key while shift key is pressed
+>(2)Removed double click on process input sink, all actions on process sinks can now be trigged via a popup menu
+* Added resize button to text parameter editor dialog
+* Added resize button to text parameter editor dialog
+* Preferences menu buttons reworked: 'OK' button saves settings permanently and closes the dialog; 
+  'Apply' button saves settings permanently and does not close the dialog
+* Generate Data: warn user if the selected number of attributes is not supported by the target function
+* The RM window title now shows the complete location of the current process to avoid confusion with multiple processes with the same name
+* Trying to create a new process/open another process/exit RM while a process is running now requires user confirmation
+* Local repositories which are inaccessible for any reason now have an annotation which shows that they are inaccessible
+* 'Remote' repositories are now called 'RapidAnalytics' repositories.
+* Plugin loading: when loading manually installed plugins from the webstart or plugins folder with multiple versions, 
+  load the one with the highest version number
+* Added database metadata caching to improve performance. If you need to clear the cache, 
+  use the menu item 'Clear Database Metadata Cache' under the 'Tools' menu.
+* Declare Missing Values: allow to declare an empty string as missing, and ignore attributes which are not compatible to the selected mode.
+* Extract Macro: added optional list parameter to add unlimited macro name/value pairs when 'macro type' is set to 'data_value'.
+* 'Synchronize Meta Data with Real Data' toggle button added in the top right corner of the process view.
+  This will now propagate the real meta data to all reached input ports after process execution.
+  This means that for example the operator after a breakpoint will have its meta data synched with the real data, therefore 
+  enabling e.g. attribute selection parameters to show the list of paramters available.
+  Known Issue: Currently this information is lost once the operator updates itself, which happens for example if you deselected/select it again.
+* Loop Until: Added 2 checkboxes in order to choose whether you want a condition check depending on the example set or on the performance.
+  'condition before' is now deselected by default.
+* Select Parameters Dialog: Parameters from type ParameterTypeString are now treated like numerical Parameters (the Grid option is enabled now), in case
+  you want to assign a row of numerical values to a String Parameter.
+* Select Parameters Dialog: All acceptable parameter types are now shown, even if the continuous/discrete mode is enabled.
+* Regular Expression Dialog: Dialog has a new tab: Regex Options. In this tab, the user can define options like multiline mode or
+  case-insensitive matching. These options will be added to the pattern though embedded flag expressions.
+* Added new shortcut to toggle the breakpoint before an operator (Shift+F7)
+* Improved many error messages
+* Update Dialog: Revamped update dialog to show various lists of packages (search,  most popular, bookmarks, etc. as well as functionality to log in/out)
+* Added a startup check for purchased but not installed extensions and a property to disable the check. Those Extensions can be directly installed from the dialog.  
+* RapidMiner enters safe mode (not loading plugins) when startup was interrupted
+* Added new 'Export as PDF' action to the 'Print results or export' dropdown button
+* Deleted tooltips for the operator list of the OptimizeParameters (Grid) operator
+* UpdateDialog: Switched the positions of the install button and the link to the extension homepage
+* UpdateDialog: Checks if the user purchased the extension when returning to the dialog after hitting the "purchase" button
+* Replaced the standard Random function in the ExpressionParser with a custom one in order to involve the random seed/the RandomGenerator for the process    
+* Updated JTDS driver to version 1.2.5
+* Loop Collection Operator has new parameters: 'set iteration macro', 'macro name' and 'macro start value'
+* Execute Process Operator: inverted the default values for all boolean parameters
+* Repository names now enforce a blacklist of invalid characters
+* Operators "Execute Process" and "Retrieve" are now named after the files your drop into the Process window
+* Nominal to Numerical: Parameter "default coding" is now set to dummy coding per default
+* Changed the help menu entry "Update RapidMiner" to "RapidMiner Marketplace"
+* Improved Remote Repository authentication
+* Improved data import wizards
+* Added default dialog options when running a process
+* Added attribute selector for the Extract Performance Operator 
+* Database access: when several database connections with the same name exist, the once provided by the same server as the process is preferred 
+* BUGFIX: Recent files are now updated on process save
+* BUGFIX: The condition on performance check at the Loop Until Operator now works properly if the performance decreases
+* BUGFIX: Editing context variables now immediately flags the process as changed
+* BUGFIX: If set to 'ask', the 'close previous results' dialog will no longer appear when resuming from a breakpoint
+* BUGFIX: Breakpoints can no longer be added to the root operator
+* BUGFIX: 'Store process here' popup menu action on another process will now correctly flag the process as saved
+* BUGFIX: Added error message for 'Find Threshold' operator when an invalid class name is entered as parameter
+* BUGFIX: The Pivot operator used on an empty example set no longer creates an example set with one example (filled with missing values)
+* BUGFIX: The De-Pivot operator now has much better error handling when trying to setup the index attribute as an already existing attribute
+* BUGFIX: Read Excel cannot open the Import Configuration Wizard, if the excel_file parameter is not set
+* BUGFIX: Nominal to Binominal can handle border cases with mapping containing less than 2 values
+* BUGFIX: Configure Repository dialog now saves user credentials fore remote repositores again
+* BUGFIX: Added error shown in Problems view when entering invalid regular expression for 'replace what' parameter of Rename by Replacing operator
+* BUGFIX: When moving a repository entry to another location which contains an entry with the same name asks for overwrite instead of showing error
+* BUGFIX: Execute Process operator potential error reporting improved
+* BUGFIX: Creating folders in repository with the same name but different capitalization (e.g. 'test' and 'Test') is now forbidden
+* BUGFIX: filtering numerical and date attributes with Filter Examples is possible again 
+* BUGFIX: Wrong parameter format in Clone Parameters causes exception
+* BUGFIX: Fixed GUI problem when trying to schedule a process on RapidAnalytics without existing RapidAnalytics repositories
+* BUGFIX: Fixed possible data loss when trying to store data/processes/etc in the repository using invalid characters for the given
+		  filesystem by now showing an error instead of failing silently
+* BUGFIX: Fixed possible data loss when trying to move repository entries into their own folder
+* BUGFIX: fixed an initialization problem in the Cross Distances operator, which caused wrong calculation of distances in some rare cases
+* BUGFIX: Quickfix Dialogs no longer vanish right after showing (RCOMM2012)
+* BUGFIX: RapidMiner no longer blocks for a varying amount of time if a connection to an online server fails
+* BUGFIX: Focus issue with delete action
+* BUGFIX: Import Binary File no longer freezes the GUI
+* BUGFIX: New Plotters showed a "This should not happen" message once in a while and where unusable until restart of RapidMiner (Bug #1274)
+* BUGFIX: Real to Integer operator: don't convert missings to 0, but keep them as missing
+* BUGFIX: Fixed wrong cell selection on rightclick for some tables after reordering columns
+* BUGFIX: Fixed startup failure when trying to start RapidMiner with broken Plugins
+* BUGFIX: Optimized update routine. Instead of failing with an cryptic error if no admin rights available, RapidMiner no shows an dialog 
+		  that asks for admin rights
+* BUGFIX: Fixed the "Select for installation" button: Error when content/behaviour changed according to factors like if the extension was purchased.
+          Now leads to the extension website when purchased but not installed. Now reacts properly to double-clicks in the extension list
+          The "Install" button turns to a disabled state when no extensions are marked for installation
+* BUGFIX: AccountService is only queried when we are logged in. The login state is saved internally
+* BUGFIX: Process undo steps are now reset when a new process is opened
+* BUGFIX: Using undo in a subprocess will no longer reset the view to the top-level of the process
+* BUGFIX: The welcome perspective now updates the recent files list, so opening a process via it now opens the correct selected process
+* BUGFIX: Drag&Drop from the OS to the RapidMiner Process design canvas now also works for .xlsx files
+* BUGFIX: Fixed several repository problems when trying to overwrite entries with themselves
+* BUGFIX: UpdateDialog: Purchase link now changes to "install" after logging in and the purchase button now redirects to the extension website
+* BUGFIX: Generate Aggregation operator can now handle the case of zero matching attributes
+* BUGFIX: Fixed several key shortcuts that worked in the wrong perspective. For example, it is no longer possible to delete operators while in the result perspective
+* BUGFIX: Drag&Drop of files (e.g. .csv/.xls) creates the corresponding read operator with the now correct filename parameter
+* BUGFIX: Drag&Drop of operators should no longer create operators halfway outside the process canvas
+* BUGFIX: Import wizards will no longer overwrite existing data without asking for permission first
+* BUGFIX: Import wizards will no longer accept wrong file types/invalid filenames in the first step
+* BUGFIX: Read SAS operator no longer causes an internal error when the data file could not be read
+* BUGFIX: "Wiki" links in the documentation tried to open a tutorial process, now open the corresponding wiki page
+* BUGFIX: Macro Editor will now remember entered values without having to press enter
+* BUGFIX: Opening the context menu on result tables will no longer deselect the currently selected cells
+* BUGFIX: Pressing "Delete" in a subprocess with the surrounding operator selected will no longer result in deletion of the whole subprocess

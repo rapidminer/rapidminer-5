@@ -1,0 +1,183 @@
+#!/bin/sh
+
+## set the path to your RapidMiner installation here or in an environment variable
+#RAPIDMINER_HOME=${HOME}
+
+## set the maximum amount of memory Java uses here or in an environment variable
+#MAX_JAVA_MEMORY=1024
+
+## set the path to the files with additional operators here or in an environment variable
+#RAPIDMINER_OPERATORS_ADDITIONAL=
+
+if [ -z "${RAPIDMINER_HOME}" ] ; then
+    BIN_DIR=`dirname "$0"`
+    RAPIDMINER_HOME=`dirname "${BIN_DIR}"`
+    echo "RAPIDMINER_HOME is not set. Trying the directory '${RAPIDMINER_HOME}'..."
+fi 
+
+# JAVA_HOME set, so use it
+if [ ! -z "${JAVA_HOME}" ] ; then
+	if [ -x "${JAVA_HOME}/bin/java" ]; then
+		JAVA="${JAVA_HOME}/bin/java"
+	fi
+fi
+# otherwise, try to find java using which
+if [ -z "${JAVA}" ] ; then
+	_jfnd="`which java`"
+	if [ -x "${_jfnd}" ]; then
+		JAVA="${_jfnd}"
+	else
+		echo 'Could not find the java executable in default path or ${JAVA_HOME}/bin/java.'
+		echo "Edit $0 and/or your local startup files."
+		exit 1
+	fi
+	unset _jfnd
+fi
+
+if [ -z "${MAX_JAVA_MEMORY}" ] ; then
+    MAX_JAVA_MEMORY=1024
+    echo "No maximum Java memory defined, using 1024 Mb..."
+fi
+
+# Get Java version
+JAVA_VERSION=$("$JAVA" -version 2>&1 | sed 's/java version "\(.*\)\.\(.*\)\..*"/\1\2/; 1q')
+echo Java version: $JAVA_VERSION
+
+# Get number of cores
+NUMBER_OF_CORES=$(grep -c ^processor /proc/cpuinfo)
+
+# If number of cores is not stored in /proc/cpuinfo, we must be running on a mac 
+if [ -z "$NUMBER_OF_CORES" ] ; then
+	NUMBER_OF_CORES=$(sysctl -n hw.ncpu)
+fi
+
+echo Number of cores: $NUMBER_OF_CORES
+
+NUMBER_OF_THREADS=1
+if [ $NUMBER_OF_CORES ]
+then
+	NUMBER_OF_THREADS=`expr $NUMBER_OF_CORES - 1`
+fi
+echo Number of GC Threads: $NUMBER_OF_THREADS
+
+
+if [ -z "${RAPIDMINER_JDBC_DRIVERS}" ] ; then
+  	RAPIDMINER_JDBC_DRIVER_PARAMETER=""
+else
+  	RAPIDMINER_JDBC_DRIVER_PARAMETER=-Drapidminer.init.jdbc.location=${RAPIDMINER_JDBC_DRIVERS}
+fi
+
+BUILD="${RAPIDMINER_HOME}/build"
+RAPIDMINER_JAR="${RAPIDMINER_HOME}/lib/rapidminer.jar"
+RAPIDMINER_CLASSPATH=""
+
+if [ -d "${BUILD}" ] ; then
+    RAPIDMINER_CLASSPATH=${BUILD}
+elif [ -f "${RAPIDMINER_JAR}" ] ; then
+    RAPIDMINER_CLASSPATH=${RAPIDMINER_JAR}
+else
+    echo "Neither ${BUILD} nor ${RAPIDMINER_JAR} was found."
+    echo "Try 'ant build' or 'ant dist' first or check the value of RAPIDMINER_HOME!"
+    exit 1
+fi
+
+for JAR in ${RAPIDMINER_HOME}/lib/*.jar ${RAPIDMINER_HOME}/lib/jdbc/*.jar ${RAPIDMINER_HOME}/lib/freehep/*.jar
+do
+CLASSPATH=${CLASSPATH}:${JAR}
+done
+
+CLASSPATH=${RAPIDMINER_CLASSPATH}:${CLASSPATH}
+
+################# Update
+update_root=~/.RapidMiner5/update
+update_dir=${update_root}/RUinstall
+update_script=${update_root}/UPDATE
+    # Performing possible update
+    if [ -d "${update_dir}" ]; then
+    	if [ -w "${RAPIDMINER_HOME}" ] ; then
+    		echo "======================================================================="
+    		echo "Performing update. Copying files from '${update_dir}' to '${RAPIDMINER_HOME}'."
+    		cp -rf "${update_dir}"/* "${RAPIDMINER_HOME}"
+    		rm -rf "${update_dir}"
+    		echo "Copy complete."
+    		if [ -f "${update_script}" ] ; then
+    			echo "Deleting obsolete files listed in ${update_script}."
+    			{
+    				while read COMMAND FILE
+    				do
+    					if [ "DELETE" = "${COMMAND}" ] ; then
+    						# Strip rapidminer/ prefix
+    						FILE=`echo ${FILE} | sed -e 's/^rapidminer\///'`
+    						TO_DELETE=${RAPIDMINER_HOME}/${FILE}
+    						if [ -f "${TO_DELETE}" ] ; then
+    							echo "Deleting regular file ${TO_DELETE}"
+    							rm ${TO_DELETE}
+    						elif [ -d "${TO_DELETE}" ] ; then
+    							echo "Deleting directory ${TO_DELETE}"
+    							rmdir ${TO_DELETE}
+    						else
+    							echo "Cannot delete file ${TO_DELETE} (does not exist)"
+    						fi    						
+    					else
+    						echo "Unknown update command: ${COMMAND}"
+    					fi
+    				done
+				} < ${update_script}
+				rm ${update_script}
+				echo "Completed deletion of obsolete files."
+			else
+				echo "No update script found in ${update_script}."
+			fi
+			rm -rf ${update_root}
+			echo "Update complete"
+			echo "======================================================================="
+    	else
+    		echo "======================================================================="
+    		echo "ATTENTION: An update was downloaded, but we cannot write to"
+    		echo "           ${RAPIDMINER_HOME}. "
+    		echo "           Ignoring update. Please restart as super user."
+    		echo "======================================================================="
+    	fi
+    fi    
+#####################################################
+
+
+echo "Starting RapidMiner from '${RAPIDMINER_HOME}', using classes from '${RAPIDMINER_CLASSPATH}'..."
+ADDITIONAL_OPTIONS="-XX:ConcGCThreads=$NUMBER_OF_THREADS -XX:ParallelGCThreads=$NUMBER_OF_CORES"
+if [ $JAVA_VERSION ]
+then
+	echo Java version: $JAVA_VERSION
+	if [ $JAVA_VERSION -ge 17 ]
+	then
+		echo Starting with G1 garbage collector
+	    ADDITIONAL_OPTIONS="$ADDITIONAL_OPTIONS -XX:+UseG1GC -XX:MaxGCPauseMillis=50 -XX:InitiatingHeapOccupancyPercent=0"
+	else
+		echo Starting with CMS garbage collector
+		ADDITIONAL_OPTIONS="$ADDITIONAL_OPTIONS -XX:+UseParallelGC -XX:+UseParallelOldGC"
+	fi
+else
+	echo Unkown Java version. Starting with default garbage collector.
+fi
+
+if [ $NUMBER_OF_CORES -gt 1 ]
+then
+	echo Starting in multi-core mode
+	$JAVA $ADDITIONAL_OPTIONS \
+    -Xmx${MAX_JAVA_MEMORY}m \
+    -XX:MaxPermSize=128m \
+	-cp ${CLASSPATH} \
+	-Drapidminer.home=${RAPIDMINER_HOME} \
+	-Drapidminer.operators.additional=${RAPIDMINER_OPERATORS_ADDITIONAL} \
+	${RAPIDMINER_JDBC_DRIVER_PARAMETER} \
+	com.rapidminer.RapidMinerCommandLine "$@"
+else
+	echo Starting in single-core mode
+	$JAVA \
+    -Xmx${MAX_JAVA_MEMORY}m \
+    -XX:MaxPermSize=128m\
+	-cp ${CLASSPATH} \
+	-Drapidminer.home=${RAPIDMINER_HOME} \
+	-Drapidminer.operators.additional=${RAPIDMINER_OPERATORS_ADDITIONAL} \
+	${RAPIDMINER_JDBC_DRIVER_PARAMETER} \
+	com.rapidminer.RapidMinerCommandLine "$@"
+fi

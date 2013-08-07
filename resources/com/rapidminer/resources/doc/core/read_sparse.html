@@ -1,0 +1,113 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" dir="ltr"><head><table cellpadding=0 cellspacing=0><tr><td><img src="icon:///24/import.png" /></td><td width="5"></td><td><h2 class="firstHeading" id="firstHeading">Read Sparse</h4></td></tr></table><hr noshade="true"></head>
+<body class="mediawiki ltr ns-0 ns-subject page-Read_Sparse skin-monobook">
+<div id="content">
+	
+	
+	
+	<div id="bodyContent">
+		
+		
+		
+		
+<div id="synopsis">
+<h4>
+<span class="mw-headline" id="Synopsis">Synopsis</span>
+</h4>
+<p>
+Reads an example file in sparse format.
+</p>
+</div><br/><h4> <span class="mw-headline" id="Description"> Description </span>
+</h4>
+<p>Reads an example file in sparse format, i.e. lines have the form
+
+</p>
+<center> <table class=pre border=0 bordercolor=black style=border-style:dashed; xml:space="preserve"> label index:value index:value index:value... </table> </center>
+<p>
+Index may be an integer (starting with 1) for the regular attributes or one of the prefixes specified by the parameter list <code>prefix_map</code>. Four possible <code>format</code>s are supported 
+</p>
+<dl>
+<dt> format_xy</dt>
+<dd>
+</dd>
+<dd> The label is the last token in each line
+</dd>
+<dt> format_yx</dt>
+<dd>
+</dd>
+<dd> The label is the first token in each line
+</dd>
+<dt> format_prefix</dt>
+<dd>
+</dd>
+<dd> The label is prefixed by 'l:'
+</dd>
+<dt> format_separate_file</dt>
+<dd>
+</dd>
+<dd> The label is read from a separate file specified by <code>label_file</code>
+</dd>
+<dt> no_label</dt>
+<dd>
+</dd>
+<dd> The example set is unlabeled.
+</dd>
+</dl>
+<p>A detailed introduction to the sparse file format is given in section <i>First steps/File formats/Data files</i>.
+
+
+</p><br/><h4> <span class="mw-headline" id="Input"> Input </span>
+</h4><br/><h4> <span class="mw-headline" id="Output"> Output </span>
+</h4>
+
+<ul class="ports">
+<li> <b>output</b>:
+</li>
+</ul><br/><h4> <span class="mw-headline" id="Parameters"> Parameters </span>
+</h4>
+
+<ul class="ports">
+<li> <b>format</b>:  Format of the sparse data file.
+</li>
+<li> <b>attribute description file</b>:  Name of the attribute description file.
+</li>
+<li> <b>data file</b>:  Name of the data file. Only necessary if not specified in the attribute description file.
+</li>
+<li> <b>label file</b>:  Name of the data file containing the labels. Only necessary if format is 'format_separate_file'.
+</li>
+<li> <b>dimension</b>:  Dimension of the example space. Only necessary if parameter 'attribute_description_file' is not set.
+</li>
+<li> <b>sample size</b>:  The maximum number of examples to read from the data files (-1 = all)
+</li>
+<li> <b>use quotes</b>:  Indicates if quotes should be regarded.
+</li>
+<li> <b>quotes character</b>:  The quotes character.
+</li>
+<li> <b>datamanagement</b>:  Determines, how the data is represented internally.
+</li>
+<li> <b>decimal point character</b>:  Character that is used as decimal point.
+</li>
+<li> <b>prefix map</b>:  Maps prefixes to names of special attributes.
+</li>
+<li> <b>encoding</b>:  The encoding used for reading or writing files.
+</li>
+</ul><br/><h4> <span class="mw-headline" id="ExampleProcess"> ExampleProcess </span>
+</h4>
+
+<div class="thumb tright">
+<div class="thumbinner" style="width:182px;">
+<img alt="" border="1" class="thumbimage" height="360" src="resource:///doc/core/images/Read Sparse-180px-Wizard.jpg" width="180"/>  <div class="thumbcaption">
+<div class="magnify"/>caption</div>
+</div>
+</div>
+
+
+
+
+
+				
+				
+	</div>
+</div>
+</body>
+</html>

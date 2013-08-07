@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<process version="5.0">
+  <context>
+    <input/>
+    <output/>
+    <macros/>
+  </context>
+  <operator activated="true" class="process" expanded="true" name="Root">
+    <description>This process contains an operator for a fast Independent Component Analysis (ICA). In contrast to PCA, the FastICA algorithm tries to identify the main independent components of the data set. In this process an ICA model is created and directly applied to the input data set. Please check out the plot view of the resulting example set, especially a scatter plot of the data for the label attribute.</description>
+    <parameter key="logverbosity" value="3"/>
+    <parameter key="random_seed" value="2001"/>
+    <parameter key="send_mail" value="1"/>
+    <parameter key="process_duration_for_mail" value="30"/>
+    <parameter key="encoding" value="SYSTEM"/>
+    <process expanded="true" height="604" width="846">
+      <operator activated="true" class="retrieve" expanded="true" height="60" name="Retrieve" width="90" x="45" y="30">
+        <parameter key="repository_entry" value="../../data/Sonar"/>
+      </operator>
+      <operator activated="true" class="independent_component_analysis" expanded="true" height="94" name="FastICA" width="90" x="180" y="30">
+        <parameter key="dimensionality_reduction" value="0"/>
+        <parameter key="algorithm_type" value="0"/>
+        <parameter key="function" value="0"/>
+        <parameter key="alpha" value="1.0"/>
+        <parameter key="row_norm" value="false"/>
+        <parameter key="max_iteration" value="300"/>
+        <parameter key="tolerance" value="1.0E-4"/>
+        <parameter key="use_local_random_seed" value="false"/>
+        <parameter key="local_random_seed" value="1992"/>
+      </operator>
+      <operator activated="true" class="apply_model" expanded="true" height="76" name="ModelApplier" width="90" x="380" y="30">
+        <list key="application_parameters"/>
+        <parameter key="create_view" value="false"/>
+      </operator>
+      <connect from_op="Retrieve" from_port="output" to_op="FastICA" to_port="example set input"/>
+      <connect from_op="FastICA" from_port="original" to_op="ModelApplier" to_port="unlabelled data"/>
+      <connect from_op="FastICA" from_port="preprocessing model" to_op="ModelApplier" to_port="model"/>
+      <connect from_op="ModelApplier" from_port="labelled data" to_port="result 1"/>
+      <portSpacing port="source_input 1" spacing="0"/>
+      <portSpacing port="sink_result 1" spacing="0"/>
+      <portSpacing port="sink_result 2" spacing="0"/>
+    </process>
+  </operator>
+</process>

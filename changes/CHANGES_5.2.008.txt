@@ -1,0 +1,14 @@
+Changes from RapidMiner 5.2.6 to 5.2.8
+--------------------------------------
+* Send Mail operator has a new behavior: Stop process and show error if mail cannot be send
+* Send Mail operator has a new parameter: 'Ignore errors'
+* Write CSV operator has a new parameter: 'Append to file'
+* Write Excel operator has a new parameter: File Format (xls, xlsx)
+* New Operator: Reorder Attributes
+* Set Macro: now can define empty macros
+* BUGFIX: Fix a "This should not happen" message in the Advanced Charts.
+* BUGFIX: Keep old settings after updating RapidMiner
+* BUGFIX: 'Cancel' ParameterTypeList Dialog works correctly now
+* BUGFIX: FP-Growth correctly handles parameter 'must contain'
+* BUGFIX: Join Operator displays MetaData correctly
+

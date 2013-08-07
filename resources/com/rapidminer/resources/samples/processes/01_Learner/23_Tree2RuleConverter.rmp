@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<process version="5.0">
+  <context>
+    <input/>
+    <output/>
+    <macros/>
+  </context>
+  <operator activated="true" class="process" expanded="true" name="Root">
+    <description>The tree2rule converter is a meta learner which uses its inner decision tree learner in order to produce a set of human readable rules.</description>
+    <parameter key="logverbosity" value="3"/>
+    <parameter key="random_seed" value="2001"/>
+    <parameter key="send_mail" value="1"/>
+    <parameter key="process_duration_for_mail" value="30"/>
+    <parameter key="encoding" value="SYSTEM"/>
+    <process expanded="true" height="584" width="918">
+      <operator activated="true" class="retrieve" expanded="true" height="60" name="Retrieve" width="90" x="45" y="30">
+        <parameter key="repository_entry" value="../../data/Golf"/>
+      </operator>
+      <operator activated="true" class="tree_to_rules" expanded="true" height="76" name="Tree2RuleConverter" width="90" x="179" y="30">
+        <process expanded="true" height="584" width="918">
+          <operator activated="true" class="decision_tree" expanded="true" height="76" name="DecisionTree" width="90" x="45" y="30">
+            <parameter key="criterion" value="gain_ratio"/>
+            <parameter key="minimal_size_for_split" value="4"/>
+            <parameter key="minimal_leaf_size" value="2"/>
+            <parameter key="minimal_gain" value="0.1"/>
+            <parameter key="maximal_depth" value="20"/>
+            <parameter key="confidence" value="0.25"/>
+            <parameter key="number_of_prepruning_alternatives" value="3"/>
+            <parameter key="no_pre_pruning" value="false"/>
+            <parameter key="no_pruning" value="false"/>
+          </operator>
+          <connect from_port="training set" to_op="DecisionTree" to_port="training set"/>
+          <connect from_op="DecisionTree" from_port="model" to_port="model"/>
+          <portSpacing port="source_training set" spacing="0"/>
+          <portSpacing port="sink_model" spacing="0"/>
+        </process>
+      </operator>
+      <connect from_op="Retrieve" from_port="output" to_op="Tree2RuleConverter" to_port="training set"/>
+      <connect from_op="Tree2RuleConverter" from_port="model" to_port="result 1"/>
+      <portSpacing port="source_input 1" spacing="0"/>
+      <portSpacing port="sink_result 1" spacing="0"/>
+      <portSpacing port="sink_result 2" spacing="0"/>
+    </process>
+  </operator>
+</process>

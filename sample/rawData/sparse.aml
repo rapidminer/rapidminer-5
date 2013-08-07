@@ -1,0 +1,19 @@
+<attributeset default_source="sparse.dat">
+
+  <label 
+    name      = "class" 
+    valuetype = "nominal">
+    <value>1</value>
+    <value>2</value>
+    <value>3</value>
+    <value>4</value>
+    <value>5</value>    
+  </label>
+
+  <attribute 
+    name          = "att" 
+    valuetype     = "real" 
+    sourcecol     = "1" 
+    sourcecol_end = "30"/>
+
+</attributeset>
