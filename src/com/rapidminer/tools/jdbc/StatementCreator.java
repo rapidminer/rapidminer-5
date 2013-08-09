@@ -79,14 +79,22 @@ public class StatementCreator {
 		LogService.getRoot().log(Level.FINE, "com.rapidminer.tools.jdbc.StatementCreator.initialization_of_quote_character", this.identifierQuote);
 		// Maps java sql Types to data types as reported by the sql driver
 		Map<Integer, DataTypeSyntaxInformation> dataTypeToMDMap = new HashMap<Integer, DataTypeSyntaxInformation>();
-		ResultSet typesResult = dbMetaData.getTypeInfo();
-		while (typesResult.next()) {
-			DataTypeSyntaxInformation dtmd = new DataTypeSyntaxInformation(typesResult);
-			// for duplicate keys, we go with the first match.
-			// By definition of getTypeInfo() the closest match will be first.
-			if (!dataTypeToMDMap.containsKey(dtmd.getDataType())) {
-				dataTypeToMDMap.put(dtmd.getDataType(), dtmd);
+		ResultSet typesResult = null;
+		
+		try {
+			typesResult = dbMetaData.getTypeInfo();
+			while (typesResult.next()) {
+				DataTypeSyntaxInformation dtmd = new DataTypeSyntaxInformation(typesResult);
+				// for duplicate keys, we go with the first match.
+				// By definition of getTypeInfo() the closest match will be first.
+				if (!dataTypeToMDMap.containsKey(dtmd.getDataType())) {
+					dataTypeToMDMap.put(dtmd.getDataType(), dtmd);
+				}
 			}
+		} finally {
+			if(typesResult!=null){
+				typesResult.close();
+			}			
 		}
 
 		registerSyntaxInfo(Ontology.NOMINAL, dataTypeToMDMap, Types.VARCHAR);
