@@ -1,11 +1,11 @@
 /*
  *  RapidMiner
  *
- *  Copyright (C) 2001-2013 by Rapid-I and the contributors
+ *  Copyright (C) 2001-2014 by RapidMiner and the contributors
  *
  *  Complete list of developers available at our web site:
  *
- *       http://rapid-i.com
+ *       http://rapidminer.com
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -124,7 +124,7 @@ public class RapidMiner {
 		private final boolean hasMainFrame;
 		private final boolean loadManagedExtensions;
 
-		private ExecutionMode(boolean isHeadless, boolean canAccessFilesystem, boolean hasMainFrame, boolean loadManagedExtensions) {
+		private ExecutionMode(final boolean isHeadless, final boolean canAccessFilesystem, final boolean hasMainFrame, final boolean loadManagedExtensions) {
 			this.isHeadless = isHeadless;
 			this.canAccessFilesystem = canAccessFilesystem;
 			this.hasMainFrame = hasMainFrame;
@@ -428,33 +428,6 @@ public class RapidMiner {
 		ParameterService.registerParameter(new ParameterTypeString(PROPERTY_RAPIDMINER_SOCKS_PROXY_HOST, "The proxy host to use for SOCKS.", true), "system");
 		ParameterService.registerParameter(new ParameterTypeInt(PROPERTY_RAPIDMINER_SOCKS_PROXY_PORT, "The proxy port to use for SOCKS.", 0, 65535, true), "system");
 		ParameterService.registerParameter(new ParameterTypeInt(WebServiceTools.WEB_SERVICE_TIMEOUT, "The timeout in milliseconds for webservice and url connections. Restart required to take effect.", 1, Integer.MAX_VALUE, 20000),"system");
-		//TODO: Re-add this after the 5.3.001 Release
-		/*
-		ParameterService.registerParameter(new ParameterTypeInt(PROPERTY_RAPIDMINER_MAX_MEMORY, "The amount of memory (in MB) used by RapidMiner.", 64, Integer.MAX_VALUE, 512), "system");
-		
-		// add parameter change listener early so we are guaranteed to notice changes to MAX_MEMORY setting by the user 
-		ParameterService.registerParameterChangeListener(new ParameterChangeListener() {
-			
-			@Override
-			public void informParameterSaved() {
-				// nothing to do here
-			}
-			
-			@Override
-			public void informParameterChanged(String key, String value) {
-				if (PROPERTY_RAPIDMINER_MAX_MEMORY.equals(key)) {
-					try {
-						// make sure it's an int
-						Integer.parseInt(value);
-						Tools.writeTextFile(FileSystemService.getMemoryConfigFile(), value);
-					} catch (IOException e) {
-						LogService.getRoot().log(Level.WARNING, I18N.getMessage(LogService.getRoot().getResourceBundle(), "com.rapidminer.RapidMiner.writing_memory_file_error", e.getMessage()), e);
-					} catch (NumberFormatException e) {
-						LogService.getRoot().log(Level.WARNING, I18N.getMessage(LogService.getRoot().getResourceBundle(), "com.rapidminer.RapidMiner.writing_memory_file_error", e.getMessage()), e);
-					}
-				}
-			}
-		});*/
 	}
 
 	private static InputHandler inputHandler = new ConsoleInputHandler();
@@ -485,20 +458,18 @@ public class RapidMiner {
 	 * @deprecated Use {@link #readProcessFile(File)} instead
 	 */
 	@Deprecated
-	public static Process readExperimentFile(File experimentfile) throws XMLException, IOException, InstantiationException, IllegalAccessException {
+	public static Process readExperimentFile(final File experimentfile) throws XMLException, IOException, InstantiationException, IllegalAccessException {
 		return readProcessFile(experimentfile);
 	}
 
-	public static Process readProcessFile(File processFile) throws XMLException, IOException, InstantiationException, IllegalAccessException {
+	public static Process readProcessFile(final File processFile) throws XMLException, IOException, InstantiationException, IllegalAccessException {
 		return readProcessFile(processFile, null);
 	}
 
-	public static Process readProcessFile(File processFile, ProgressListener progressListener) throws XMLException, IOException, InstantiationException, IllegalAccessException {
+	public static Process readProcessFile(final File processFile, final ProgressListener progressListener) throws XMLException, IOException, InstantiationException, IllegalAccessException {
 		try {
-			//LogService.getRoot().fine("Reading process file '" + processFile + "'.");
 			LogService.getRoot().log(Level.FINE, "com.rapidminer.RapidMiner.reading_process_file", processFile);
 			if (!processFile.exists() || !processFile.canRead()) {
-				//LogService.getRoot().severe("Cannot read process definition file '" + processFile + "'!");
 				LogService.getRoot().log(Level.SEVERE, "com.rapidminer.RapidMiner.reading_process_definition_file_error", processFile);
 			}
 			return new Process(processFile, progressListener);
@@ -551,10 +522,6 @@ public class RapidMiner {
 		Plugin.initPluginSplashTexts(RapidMiner.splashScreen);
 		RapidMiner.showSplashInfos();
 
-		//RapidMiner.splashMessage("init_setup");
-
-		//LogService.getRoot().config("Default encoding is " + Tools.getDefaultEncoding()+".");
-
 		RapidMiner.splashMessage("init_ops");
 		OperatorService.init();
 
@@ -562,6 +529,17 @@ public class RapidMiner {
 
 		RapidMiner.splashMessage("xml_transformer");
 		XMLImporter.init();
+		
+		// generate encryption key if necessary
+		if (!CipherTools.isKeyAvailable()) {
+			RapidMiner.splashMessage("gen_key");
+			try {
+				KeyGeneratorTool.createAndStoreKey();
+			} catch (KeyGenerationException e) {
+				LogService.getRoot().log(Level.WARNING,
+						I18N.getMessage(LogService.getRoot().getResourceBundle(), "com.rapidminer.RapidMiner.generating_encryption_key_error", e.getMessage()), e);
+			}
+		}
 
 		RapidMiner.splashMessage("load_jdbc_drivers");
 		DatabaseService.init();
@@ -569,18 +547,6 @@ public class RapidMiner {
 
 		RapidMiner.splashMessage("init_configurables");
 		ConfigurationManager.getInstance().initialize();
-
-		// generate encryption key if necessary
-		if (!CipherTools.isKeyAvailable()) {
-			RapidMiner.splashMessage("gen_key");
-			try {
-				KeyGeneratorTool.createAndStoreKey();
-			} catch (KeyGenerationException e) {
-				//LogService.getRoot().log(Level.WARNING, "Cannot generate encryption key: " + e.getMessage(), e);
-				LogService.getRoot().log(Level.WARNING,
-						I18N.getMessage(LogService.getRoot().getResourceBundle(), "com.rapidminer.RapidMiner.generating_encryption_key_error", e.getMessage()), e);
-			}
-		}
 
 		// initialize renderers
 		RapidMiner.splashMessage("init_renderers");
@@ -611,25 +577,16 @@ public class RapidMiner {
 	}
 
 	private static void showSplashInfos() {
-		if (getSplashScreen() != null)
+		if (getSplashScreen() != null) {
 			getSplashScreen().setInfosVisible(true);
+		}
 	}
 
 	public static SplashScreen showSplash() {
-		URL url = Tools.getResource("rapidminer_logo.png");
-		Image logo = null;
-		try {
-			if (url != null) {
-				logo = ImageIO.read(url);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-		return showSplash(logo);
+		return showSplash(null);
 	}
 
-	public static SplashScreen showSplash(Image productLogo) {
+	public static SplashScreen showSplash(final Image productLogo) {
 		RapidMiner.splashScreen = new SplashScreen(getShortVersion(), productLogo);
 		RapidMiner.splashScreen.showSplashScreen();
 		return RapidMiner.splashScreen;
@@ -640,7 +597,7 @@ public class RapidMiner {
 	}
 
 	/** Displays the message with 18n key gui.splash.messageKey. */
-	public static void splashMessage(String messageKey) {
+	public static void splashMessage(final String messageKey) {
 		performInitialSettings();
 		if (RapidMiner.splashScreen != null) {
 			RapidMiner.splashScreen.setMessage(I18N.getMessage(I18N.getGUIBundle(), "gui.splash." + messageKey));
@@ -650,7 +607,7 @@ public class RapidMiner {
 	}
 
 	/** Displays the formatted message with 18n key gui.splash.messageKey. */
-	public static void splashMessage(String messageKey, Object... args) {
+	public static void splashMessage(final String messageKey, final Object... args) {
 		performInitialSettings();
 		if (RapidMiner.splashScreen != null) {
 			RapidMiner.splashScreen.setMessage(I18N.getMessage(I18N.getGUIBundle(), "gui.splash." + messageKey, args));
@@ -676,7 +633,6 @@ public class RapidMiner {
 				in = new BufferedReader(new FileReader(lastVersionFile));
 				versionString = in.readLine();
 			} catch (IOException e) {
-				//LogService.getRoot().log(Level.WARNING, "Cannot read global version file of last used version.", e);
 				LogService.getRoot()
 						.log(Level.WARNING, I18N.getMessage(LogService.getRoot().getResourceBundle(), "com.rapidminer.RapidMiner.reading_global_version_file_error"), e);
 			} finally {
@@ -684,7 +640,6 @@ public class RapidMiner {
 					try {
 						in.close();
 					} catch (IOException e) {
-						//LogService.getRoot().log(Level.WARNING, "Cannnot close stream to file " + lastVersionFile, e);
 						LogService.getRoot().log(Level.WARNING,
 								I18N.getMessage(LogService.getRoot().getResourceBundle(), "com.rapidminer.RapidMiner.closing_stream_error", lastVersionFile), e);
 					}
@@ -717,25 +672,25 @@ public class RapidMiner {
 		performedInitialSettings = true;
 	}
 
-	private static void writeLastVersion(File versionFile) {
+	private static void writeLastVersion(final File versionFile) {
 		PrintWriter out = null;
 		try {
 			out = new PrintWriter(new FileWriter(versionFile));
 			out.println(getLongVersion());
 		} catch (IOException e) {
-			//LogService.getRoot().log(Level.WARNING, "Cannot write current version into property file.", e);
 			LogService.getRoot().log(Level.WARNING, I18N.getMessage(LogService.getRoot().getResourceBundle(), "com.rapidminer.RapidMiner.writing_current_version_error"), e);
 		} finally {
-			if (out != null)
+			if (out != null) {
 				out.close();
+			}
 		}
 	}
 
-	private static void performFirstInitialization(VersionNumber lastVersion, VersionNumber currentVersion) {
-		if (currentVersion != null)
-			//LogService.getRoot().info("Performing upgrade" + (lastVersion != null ? " from version " + lastVersion : "") + " to version " + currentVersion);
+	private static void performFirstInitialization(final VersionNumber lastVersion, final VersionNumber currentVersion) {
+		if (currentVersion != null) {
 			LogService.getRoot().log(Level.INFO, "com.rapidminer.RapidMiner.performing_upgrade",
 					new Object[] { (lastVersion != null ? " from version " + lastVersion : ""), currentVersion });
+		}
 
 		// copy old settings to new version file
 		ParameterService.copyMainUserConfigFile(lastVersion, currentVersion);
@@ -748,13 +703,14 @@ public class RapidMiner {
 
 	public static Frame getSplashScreenFrame() {
 		performInitialSettings();
-		if (RapidMiner.splashScreen != null)
+		if (RapidMiner.splashScreen != null) {
 			return RapidMiner.splashScreen.getSplashScreenFrame();
-		else
+		} else {
 			return null;
+		}
 	}
 
-	public static void setInputHandler(InputHandler inputHandler) {
+	public static void setInputHandler(final InputHandler inputHandler) {
 		RapidMiner.inputHandler = inputHandler;
 	}
 
@@ -762,7 +718,7 @@ public class RapidMiner {
 		return inputHandler;
 	}
 
-	public synchronized static void addShutdownHook(Runnable runnable) {
+	public synchronized static void addShutdownHook(final Runnable runnable) {
 		shutdownHooks.add(runnable);
 	}
 	
@@ -771,7 +727,7 @@ public class RapidMiner {
 	 * after initiation of RapidMiner. If RapidMiner is already initiated the given
 	 * {@link Runnable} will be executed immediately.
 	 */
-	public synchronized static void addStartupHook(Runnable runnable) {
+	public synchronized static void addStartupHook(final Runnable runnable) {
 		if(isInitiated) {
 			runStartupHook(runnable);
 		}
@@ -789,7 +745,7 @@ public class RapidMiner {
 		return isInitiated;
 	}
 	
-	private static void runStartupHook(Runnable runnable) {
+	private static void runStartupHook(final Runnable runnable) {
 		try {
 			runnable.run();
 		} catch (Exception e) {
@@ -798,12 +754,11 @@ public class RapidMiner {
 		}
 	}
 
-	public synchronized static void quit(ExitMode exitMode) {
+	public synchronized static void quit(final ExitMode exitMode) {
 		for (Runnable hook : shutdownHooks) {
 			try {
 				hook.run();
 			} catch (Exception e) {
-				//LogService.getRoot().log(Level.WARNING, "Error executing shutdown hook: " + e.getMessage(), e);
 				LogService.getRoot().log(Level.WARNING,
 						I18N.getMessage(LogService.getRoot().getResourceBundle(), "com.rapidminer.RapidMiner.executing_shotdown_hook_error", e.getMessage()), e);
 			}
@@ -811,7 +766,6 @@ public class RapidMiner {
 		try {
 			Runtime.getRuntime().runFinalization();
 		} catch (Exception e) {
-			//LogService.getRoot().log(Level.WARNING, "Error during finalization: " + e.getMessage(), e);
 			LogService.getRoot().log(Level.WARNING,
 					I18N.getMessage(LogService.getRoot().getResourceBundle(), "com.rapidminer.RapidMiner.error_during_finalization", e.getMessage()), e);
 		}
@@ -842,7 +796,7 @@ public class RapidMiner {
 		return executionMode;
 	}
 
-	public static void setExecutionMode(ExecutionMode executionMode) {
+	public static void setExecutionMode(final ExecutionMode executionMode) {
 		RapidMiner.executionMode = executionMode;
 	}
 
@@ -866,7 +820,7 @@ public class RapidMiner {
 	 * @deprecated Use {@link #ParameterService.registerParameter(ParameterType)} instead
 	 */
 	@Deprecated
-	public static void registerYaleProperty(ParameterType type) {
+	public static void registerYaleProperty(final ParameterType type) {
 		ParameterService.registerParameter(type);
 	}
 
@@ -877,7 +831,7 @@ public class RapidMiner {
 	 * the property is of this type, for offering the user a reasonable interface.
 	 */
 	@Deprecated
-	public static void registerRapidMinerProperty(ParameterType type) {
+	public static void registerRapidMinerProperty(final ParameterType type) {
 		ParameterService.registerParameter(type);
 	}
 
@@ -891,7 +845,7 @@ public class RapidMiner {
 	 * @return the String value of the property or null if property is unknown.
 	 */
 	@Deprecated
-	public static String getRapidMinerPropertyValue(String property) {
+	public static String getRapidMinerPropertyValue(final String property) {
 		return ParameterService.getParameterValue(property);
 	}
 
@@ -900,7 +854,7 @@ public class RapidMiner {
 	 * Please use {@link ParameterService#setParameterValue(String, String)} instead of this method.
 	 */
 	@Deprecated
-	public static void setRapidMinerPropertyValue(String property, String value) {
+	public static void setRapidMinerPropertyValue(final String property, final String value) {
 		ParameterService.setParameterValue(property, value);
 	}
 }

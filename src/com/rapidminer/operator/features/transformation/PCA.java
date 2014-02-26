@@ -1,11 +1,11 @@
 /*
  *  RapidMiner
  *
- *  Copyright (C) 2001-2013 by Rapid-I and the contributors
+ *  Copyright (C) 2001-2014 by RapidMiner and the contributors
  *
  *  Complete list of developers available at our web site:
  *
- *       http://rapid-i.com
+ *       http://rapidminer.com
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -23,6 +23,7 @@
 package com.rapidminer.operator.features.transformation;
 
 import java.util.List;
+import java.util.logging.Level;
 
 import Jama.EigenvalueDecomposition;
 import Jama.Matrix;
@@ -49,6 +50,7 @@ import com.rapidminer.parameter.ParameterTypeDouble;
 import com.rapidminer.parameter.ParameterTypeInt;
 import com.rapidminer.parameter.UndefinedParameterError;
 import com.rapidminer.parameter.conditions.EqualTypeCondition;
+import com.rapidminer.tools.LogService;
 import com.rapidminer.tools.Ontology;
 import com.rapidminer.tools.math.matrix.CovarianceMatrix;
 
@@ -102,6 +104,11 @@ public class PCA extends Operator {
 				int resultNumber = numberOfAttributes;
 				if (getParameterAsInt(PARAMETER_REDUCTION_TYPE) == REDUCTION_FIXED) {
 					resultNumber = getParameterAsInt(PARAMETER_NUMBER_OF_COMPONENTS);
+					int regular_numbers = metaData.getNumberOfRegularAttributes();
+					if(regular_numbers < resultNumber) {
+						LogService.getRoot().log(Level.WARNING, "com.rapidminer.operator.features.transformation.PCA.less_attributes", new Object[] {resultNumber, regular_numbers});
+						resultNumber = regular_numbers;
+					}
 					metaData.attributesAreKnown();
 				} else if (getParameterAsInt(PARAMETER_REDUCTION_TYPE) == REDUCTION_VARIANCE) {
 					resultNumber = numberOfAttributes;
@@ -158,7 +165,7 @@ public class PCA extends Operator {
 			model.setVarianceThreshold(getParameterAsDouble(PARAMETER_VARIANCE_THRESHOLD));
 			break;
 		case REDUCTION_FIXED:
-			model.setNumberOfComponents(getParameterAsInt(PARAMETER_NUMBER_OF_COMPONENTS));
+			model.setNumberOfComponents(Math.min(exampleSet.getAttributes().size(), getParameterAsInt(PARAMETER_NUMBER_OF_COMPONENTS)));
 			break;
 		}
 

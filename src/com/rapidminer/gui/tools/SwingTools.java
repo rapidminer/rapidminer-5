@@ -1,11 +1,11 @@
 /*
  *  RapidMiner
  *
- *  Copyright (C) 2001-2013 by Rapid-I and the contributors
+ *  Copyright (C) 2001-2014 by RapidMiner and the contributors
  *
  *  Complete list of developers available at our web site:
  *
- *       http://rapid-i.com
+ *       http://rapidminer.com
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -146,13 +146,13 @@ public class SwingTools {
     /** Some color constants for Java Look and Feel. */
     public static final Color LIGHTEST_BLUE = new Color(233, 236, 242);
 
-    /** The Rapid-I orange color. */
+    /** The RapidMiner orange color. */
     public static final Color RAPID_I_ORANGE = new Color(242, 146, 0);
 
-    /** The Rapid-I brown color. */
+    /** The RapidMiner brown color. */
     public static final Color RAPID_I_BROWN = new Color(97, 66, 11);
 
-    /** The Rapid-I beige color. */
+    /** The RapidMiner beige color. */
     public static final Color RAPID_I_BEIGE = new Color(202, 188, 165);
 
     /** Some color constants for Java Look and Feel. */

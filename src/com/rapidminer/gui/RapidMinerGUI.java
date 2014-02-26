@@ -1,11 +1,11 @@
 /*
  *  RapidMiner
  *
- *  Copyright (C) 2001-2013 by Rapid-I and the contributors
+ *  Copyright (C) 2001-2014 by RapidMiner and the contributors
  *
  *  Complete list of developers available at our web site:
  *
- *       http://rapid-i.com
+ *       http://rapidminer.com
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -20,7 +20,6 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see http://www.gnu.org/licenses/.
  */
-
 package com.rapidminer.gui;
 
 import java.awt.Color;
@@ -173,7 +172,7 @@ public class RapidMinerGUI extends RapidMiner {
 		ParameterService.registerParameter(new ParameterTypeBoolean(PROPERTY_AUTOWIRE_INPUT, "If checked, operator's inputs are wired automatically when added. Can be checked also in the \"Operators\" tree.", false));
 		ParameterService.registerParameter(new ParameterTypeBoolean(PROPERTY_AUTOWIRE_OUTPUT, "If checked, operator's outputs are wired automatically when added. Can be checked also in the \"Operators\" tree.", false));
 		ParameterService.registerParameter(new ParameterTypeCategory(PROPERTY_CLOSE_RESULTS_BEFORE_RUN, "Close active result tabs when new process starts?", DecisionRememberingConfirmDialog.PROPERTY_VALUES, DecisionRememberingConfirmDialog.TRUE));
-		ParameterService.registerParameter(new ParameterTypeCategory(PROPERTY_RUN_REMOTE_NOW, "Execute the process on RapidAnalytics now?", DecisionRememberingConfirmDialog.PROPERTY_VALUES, DecisionRememberingConfirmDialog.ASK));
+		ParameterService.registerParameter(new ParameterTypeCategory(PROPERTY_RUN_REMOTE_NOW, "Execute the process on RapidMiner Server now?", DecisionRememberingConfirmDialog.PROPERTY_VALUES, DecisionRememberingConfirmDialog.ASK));
 		ParameterService.registerParameter(new ParameterTypeCategory(PROPERTY_CLOSE_ALL_RESULTS_NOW, "Close all results on button pressed?", DecisionRememberingConfirmDialog.PROPERTY_VALUES, DecisionRememberingConfirmDialog.ASK));
 
 		ParameterService.registerParameter(new ParameterTypeBoolean(PROPERTY_FETCH_DATA_BASE_TABLES_NAMES, "Fetch the data base tables names in the SQL query dialog of all SQL operators.", true));

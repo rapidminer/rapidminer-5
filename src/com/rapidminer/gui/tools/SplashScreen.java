@@ -1,11 +1,11 @@
 /*
  *  RapidMiner
  *
- *  Copyright (C) 2001-2013 by Rapid-I and the contributors
+ *  Copyright (C) 2001-2014 by RapidMiner and the contributors
  *
  *  Complete list of developers available at our web site:
  *
- *       http://rapid-i.com
+ *       http://rapidminer.com
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -63,7 +63,7 @@ public class SplashScreen extends JPanel implements ActionListener {
 
 	private static final int EXTENSION_GAP = 400;
 	private static final float EXTENSION_FADE_TIME = 1000;
-	private static final int MAX_NUMBER_EXTENSION_ICONS = 7;
+	private static final int MAX_NUMBER_EXTENSION_ICONS = 6;
 
 	private static final long serialVersionUID = -1525644776910410809L;
 
@@ -78,7 +78,7 @@ public class SplashScreen extends JPanel implements ActionListener {
 	static {
 		try {
 			if (backgroundImage == null) {
-				URL url = Tools.getResource("splashscreen_community.png");
+				URL url = Tools.getResource("splashscreen_rm6.png");
 				if (url != null)
 					backgroundImage = ImageIO.read(url);
 			}
@@ -100,14 +100,14 @@ public class SplashScreen extends JPanel implements ActionListener {
 
 	private Timer animationTimer;
 	private List<Runnable> animationRenderers = new LinkedList<Runnable>();
-	
+
 	private List<Pair<BufferedImage, Long>> extensionIcons = Collections.synchronizedList(new LinkedList<Pair<BufferedImage, Long>>());
 	private long lastExtensionAdd = 0;
 
 	public SplashScreen(String productVersion, Image productLogo) {
 		this(productLogo, createDefaultProperties(productVersion));
 	}
-
+	
 	public SplashScreen(String productVersion, Image productLogo, URL propertyFile) {
 		this(productLogo, createProperties(productVersion, propertyFile));
 	}
@@ -129,7 +129,7 @@ public class SplashScreen extends JPanel implements ActionListener {
 		else
 			splashScreenFrame.setSize(450, 350);
 		splashScreenFrame.setLocationRelativeTo(null);
-		
+
 		animationTimer = new Timer(10, this);
 		animationTimer.setRepeats(true);
 		animationTimer.start();
@@ -148,7 +148,7 @@ public class SplashScreen extends JPanel implements ActionListener {
 				in.close();
 			} catch (Exception e) {
 				//LogService.getGlobal().logError("Cannot read splash screen infos: " + e.getMessage());
-				LogService.getRoot().log(Level.SEVERE, "com.rapidminer.gui.tools.dialogs.SplashScreen.reading_splash_screen_error",  e.getMessage());
+				LogService.getRoot().log(Level.SEVERE, "com.rapidminer.gui.tools.dialogs.SplashScreen.reading_splash_screen_error", e.getMessage());
 			}
 		}
 		properties.setProperty("version", productVersion);
@@ -181,11 +181,11 @@ public class SplashScreen extends JPanel implements ActionListener {
 		int size = currentExtensionIcons.size();
 		if (size > 0) {
 			Graphics2D g2d = (Graphics2D) g;
-			
+
 			g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
 			g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-			
-			g2d.translate(400, 140);
+
+			g2d.translate(380, 20);
 			g2d.scale(0.5, 0.5);
 			long currentTimeMillis = System.currentTimeMillis();
 
@@ -196,20 +196,20 @@ public class SplashScreen extends JPanel implements ActionListener {
 			}
 
 			// now paint other icons
-			int shiftX = 51;
+			int shiftY = 51;
 			for (int i = 0; i < numberToShow; i++) {
 				if (numberToShow > i + MAX_NUMBER_EXTENSION_ICONS) {
 					// then we have to fade out again
-					Pair<BufferedImage, Long> pair = currentExtensionIcons.get(i + MAX_NUMBER_EXTENSION_ICONS);					
+					Pair<BufferedImage, Long> pair = currentExtensionIcons.get(i + MAX_NUMBER_EXTENSION_ICONS);
 					float min = Math.min((currentTimeMillis - pair.getSecond()) / EXTENSION_FADE_TIME, 1f);
-					g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1-min));
+					g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1 - min));
 				} else {
 					// fade in
 					Pair<BufferedImage, Long> pair = currentExtensionIcons.get(i);
 					float min = Math.min((currentTimeMillis - pair.getSecond()) / EXTENSION_FADE_TIME, 1f);
 					g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, min));
 				}
-				g2d.drawImage(currentExtensionIcons.get(i).getFirst(), null, -(i % MAX_NUMBER_EXTENSION_ICONS) * shiftX, 0);
+				g2d.drawImage(currentExtensionIcons.get(i).getFirst(), null, 0, (i % MAX_NUMBER_EXTENSION_ICONS) * shiftY);
 			}
 		}
 	}
@@ -273,13 +273,13 @@ public class SplashScreen extends JPanel implements ActionListener {
 			BufferedImage bufferedImage = new BufferedImage(48, 48, BufferedImage.TYPE_INT_ARGB);
 			Graphics2D graphics = bufferedImage.createGraphics();
 			graphics.drawImage(extensionIcon.getImage(), 0, 0, null);
-			
+
 			synchronized (extensionIcons) {
 				extensionIcons.add(new Pair<BufferedImage, Long>(bufferedImage, currentTimeMillis));
 			}
 		}
 	}
-	
+
 	private List<Pair<BufferedImage, Long>> getSynchronizedExtensionIcons() {
 		synchronized (extensionIcons) {
 			return new ArrayList<Pair<BufferedImage, Long>>(extensionIcons);
@@ -289,7 +289,7 @@ public class SplashScreen extends JPanel implements ActionListener {
 	public void addAnimationRenderer(Runnable runable) {
 		this.animationRenderers.add(runable);
 	}
-	
+
 	@Override
 	/**
 	 * This method is used for being repainted for
@@ -297,7 +297,7 @@ public class SplashScreen extends JPanel implements ActionListener {
 	 */
 	public void actionPerformed(ActionEvent e) {
 		List<Runnable> copiedAnimationRenderers = new LinkedList<Runnable>(animationRenderers);
-		for (Runnable runnable: copiedAnimationRenderers)
+		for (Runnable runnable : copiedAnimationRenderers)
 			runnable.run();
 		repaint();
 	}

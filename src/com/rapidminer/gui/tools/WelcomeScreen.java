@@ -1,11 +1,11 @@
 /*
  *  RapidMiner
  *
- *  Copyright (C) 2001-2013 by Rapid-I and the contributors
+ *  Copyright (C) 2001-2014 by RapidMiner and the contributors
  *
  *  Complete list of developers available at our web site:
  *
- *       http://rapid-i.com
+ *       http://rapidminer.com
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -256,9 +256,8 @@ public final class WelcomeScreen extends JPanel implements Dockable {
 			@Override
 			public void run() {
 				try {
-					newsPane.setPage(new URL("http://news.rapidminer.com/"));
+					newsPane.setPage(new URL("http://redirects.rapidminer.com/news/studio/5"));
 				} catch (IOException e2) {
-					//LogService.getRoot().log(Level.INFO, "Cannot download news: "+e2, e2);
 					LogService.getRoot().log(Level.INFO, 
 							I18N.getMessage(LogService.getRoot().getResourceBundle(), 
 							"com.rapidminer.gui.tools.WelcomeScreen.downloading_news_error", e2), 

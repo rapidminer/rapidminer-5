@@ -1,11 +1,11 @@
 /*
  *  RapidMiner
  *
- *  Copyright (C) 2001-2013 by Rapid-I and the contributors
+ *  Copyright (C) 2001-2014 by RapidMiner and the contributors
  *
  *  Complete list of developers available at our web site:
  *
- *       http://rapid-i.com
+ *       http://rapidminer.com
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -86,7 +86,7 @@ public class AboutBox extends JDialog {
 			}
 		}
 		RAPID_MINER_LOGO = rmLogo;
-		url = Tools.getResource("splashscreen_community.png");
+		url = Tools.getResource("splashscreen_rm6.png");
 		if (url != null) {
 			try {
 				backgroundImage = ImageIO.read(url);
@@ -152,9 +152,7 @@ public class AboutBox extends JDialog {
 				} else {
 					g.drawImage(productLogo, getWidth() / 2 - productLogo.getWidth(this) / 2, 90, this);
 				}
-			} else {
-				g.drawString(properties.getProperty("name"), 20, nameY);
-			}
+			} 
 
 			int y = 240;
 			g.setColor(SwingTools.BROWN_FONT_COLOR);
@@ -227,7 +225,7 @@ public class AboutBox extends JDialog {
 		if (name != null) {
 			setTitle("About " + name);
 		}
-		contentPanel = new ContentPanel(properties, productLogo);
+		contentPanel = new ContentPanel(properties, null);
 		add(contentPanel, BorderLayout.CENTER);
 
 		JPanel buttonPanel = new JPanel(new GridBagLayout());
@@ -246,7 +244,7 @@ public class AboutBox extends JDialog {
 					try {
 						Desktop.getDesktop().browse(new URI(url));
 					} catch (Exception e1) {
-						e1.printStackTrace();
+						SwingTools.showSimpleErrorMessage("cannot_open_browser", e1);				
 					}
 				}
 			}), c);

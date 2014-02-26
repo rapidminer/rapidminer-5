@@ -1,11 +1,11 @@
 /*
  *  RapidMiner
  *
- *  Copyright (C) 2001-2013 by Rapid-I and the contributors
+ *  Copyright (C) 2001-2014 by RapidMiner and the contributors
  *
  *  Complete list of developers available at our web site:
  *
- *       http://rapid-i.com
+ *       http://rapidminer.com
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -67,7 +67,7 @@ public class Tutorial extends ButtonDialog implements WindowListener {
 		uiDefaults.put("EditorPane.font", font);
 	}
 
-	private static final String START_TEXT = "<h2>Welcome to the RapidMiner online tutorial!</h2><p>This tutorial demonstrates basic concepts of RapidMiner and simple process setups which can be performed. The user should have some knowledge in the domains of data mining and ETL.</p><p>Whenever this tutorial refers to the &quot;RapidMiner Tutorial / Manual&quot;, it means the printed version of the RapidMiner manual available at<br><br><center><code>http://rapid-i.com</code></center></p><p>You should read the RapidMiner Manual for better motivation and an idea of the basic concepts of RapidMiner, but you can also try to start with the online tutorial without reading the printed version first. Please read the texts carefully and try at least the suggested steps. The online tutorial will take about one hour.</p><br><h4>Please note:</h4><p>Most parts of RapidMiner provide additional information if you hold the mouse pointer a few moments on the part (tool tip texts). In this way all operators and parameters are described too.</p>";
+	private static final String START_TEXT = "<h2>Welcome to the RapidMiner online tutorial!</h2><p>This tutorial demonstrates basic concepts of RapidMiner and simple process setups which can be performed. The user should have some knowledge in the domains of data mining and ETL.</p><p>Whenever this tutorial refers to the &quot;RapidMiner Tutorial / Manual&quot;, it means the printed version of the RapidMiner manual available at<br><br><center><code>http://rapidminer.com</code></center></p><p>You should read the RapidMiner Manual for better motivation and an idea of the basic concepts of RapidMiner, but you can also try to start with the online tutorial without reading the printed version first. Please read the texts carefully and try at least the suggested steps. The online tutorial will take about one hour.</p><br><h4>Please note:</h4><p>Most parts of RapidMiner provide additional information if you hold the mouse pointer a few moments on the part (tool tip texts). In this way all operators and parameters are described too.</p>";
 
 	private static final String END_TEXT = "<h2>Congratulations!</h2><p>You have finished the RapidMiner online tutorial. You should be able to perform many of the possible process definitions. Now, you know the most important building blocks of the possible data mining process definitions. Of course these building blocks can be arbitrarily nested in RapidMiner as long as their input and output types fits. For a reference of all operators please refer to the RapidMiner Tutorial. Check also the other sample process setups which can be found in the sample directory of RapidMiner.</p><p>We have added many known preprocessing steps and learning operators to RapidMiner. Most data formats can also be handled. If you need to adapt RapidMiner you should read the chapter of the RapidMiner Tutorial which describes the creation of operators and the extension mechanism. RapidMiner can easily be extended. Have fun!</p>";
 

@@ -1,11 +1,11 @@
 /*
  *  RapidMiner
  *
- *  Copyright (C) 2001-2013 by Rapid-I and the contributors
+ *  Copyright (C) 2001-2014 by RapidMiner and the contributors
  *
  *  Complete list of developers available at our web site:
  *
- *       http://rapid-i.com
+ *       http://rapidminer.com
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -31,7 +31,7 @@ import com.rapidminer.gui.tools.VersionNumber;
  * @author Simon Fischer
  */
 public class RapidMinerVersion extends VersionNumber {
-	private static final String VERSION_STRING = "5.3.012";
+	private static final String VERSION_STRING = "5.3.015";
 	public RapidMinerVersion() {
 		super(VERSION_STRING);
 	}

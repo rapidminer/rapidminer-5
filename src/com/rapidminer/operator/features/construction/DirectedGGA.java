@@ -1,11 +1,11 @@
 /*
  *  RapidMiner
  *
- *  Copyright (C) 2001-2013 by Rapid-I and the contributors
+ *  Copyright (C) 2001-2014 by RapidMiner and the contributors
  *
  *  Complete list of developers available at our web site:
  *
- *       http://rapid-i.com
+ *       http://rapidminer.com
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -79,7 +79,7 @@ import com.rapidminer.parameter.ParameterTypeString;
  * value series, it is restricted to example sets with only single attributes.
  * For (automatic) feature extraction from values series the value series plugin
  * for RapidMiner written by Ingo Mierswa should be used. It is available at
- * <code>http://rapid-i.com</code>.
+ * <code>http://rapidminer.com</code>.
  * 
  * @author Ingo Mierswa
  */
