@@ -3,7 +3,7 @@
 ; -------------------------------------------------
  
 # Name of Program
-Name "RapidMiner 5"
+Name "RapidMiner Studio 5"
 
 # force compression with lzma
 SetCompress force
@@ -17,15 +17,15 @@ RequestExecutionLevel admin
 
 # Defines
 !include version.nsi
-!define REGKEY "SOFTWARE\Rapid-i\$(^Name)"
-!define COMPANY "Rapid-I GmbH"
+!define REGKEY "SOFTWARE\RapidMiner\$(^Name)"
+!define COMPANY "RapidMiner GmbH"
 !define URL http://www.rapidminer.com
 !define LICENSE ..\release\files\LICENSE.txt
 !ifdef WIN64
-    !define DEFAULT_INSTALL_DIR $PROGRAMFILES64\Rapid-I\RapidMiner5
+    !define DEFAULT_INSTALL_DIR $PROGRAMFILES64\RapidMiner\RapidMiner5
     !define OUTPUT_FILE ..\release\rapidminer-${SHORT_VERSION}x64-install.exe
 !else
-    !define DEFAULT_INSTALL_DIR $PROGRAMFILES\Rapid-I\RapidMiner5
+    !define DEFAULT_INSTALL_DIR $PROGRAMFILES\RapidMiner\RapidMiner5
     !define OUTPUT_FILE ..\release\rapidminer-${SHORT_VERSION}x32-install.exe
 !endif
 !define ALL_FILES_LOCATION ..\release\files\*

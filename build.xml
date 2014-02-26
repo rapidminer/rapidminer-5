@@ -197,8 +197,8 @@
 				<attribute name="Specification-Version" value="${rapidminer.longversion}" />
 				<attribute name="Implementation-Title" value="RapidMiner" />
 				<attribute name="Implementation-Version" value="${rapidminer.longversion}-${platform}" />
-				<attribute name="Implementation-Vendor" value="Rapid-I" />
-				<attribute name="Specification-Vendor" value="Rapid-I" />
+				<attribute name="Implementation-Vendor" value="RapidMiner" />
+				<attribute name="Specification-Vendor" value="RapidMiner" />
 				<attribute name="Implementation-URL" value="http://www.rapidminer.com" />
 				<attribute name="Class-Path" value="launcher.jar ${manifest.classpath}" />
 				<attribute name="Main-Class" value="com.rapidminer.gui.RapidMinerGUI" />
@@ -211,8 +211,8 @@
 				<attribute name="Specification-Version" value="${rapidminer.longversion}" />
 				<attribute name="Implementation-Title" value="RapidMinerLauncher" />
 				<attribute name="Implementation-Version" value="${rapidminer.longversion}-${platform}" />
-				<attribute name="Implementation-Vendor" value="Rapid-I" />
-				<attribute name="Specification-Vendor" value="Rapid-I" />
+				<attribute name="Implementation-Vendor" value="RapidMiner" />
+				<attribute name="Specification-Vendor" value="RapidMiner" />
 				<attribute name="Implementation-URL" value="http://www.rapidminer.com" />
 				<attribute name="Class-Path" value="rapidminer.jar ${manifest.classpath}" />
 				<attribute name="Main-Class" value="com.rapid_i.Launcher" />
@@ -279,7 +279,7 @@
 		<copy file="${lib}/launcher.jar" todir="${release.files}/lib" />
 
 		<taskdef resource="org/freecompany/redline/ant/antlib.xml" classpath="${ant.library.dir}/redline-1.1.3.jar" />
-		<rpm architecture='NOARCH' group='Applications' summary="RapidMiner ${rapidminer.shortversion} Community Edition" name='rapidminer' release="1" license="AGPL3" url="http://rapid-i.com" vendor="Rapid-I GmbH" packager="Marcin Skirzynski" version='${rapidminer.shortversion}' destination='${release}' description="RapidMiner is the world-wide leading open-source data mining solution due to the combination of its leading-edge technologies and its functional range. Applications of RapidMiner cover a wide range of real-world data mining tasks." xmlns="antlib:org.freecompany.redline.ant">
+		<rpm architecture='NOARCH' group='Applications' summary="RapidMiner ${rapidminer.shortversion} Community Edition" name='rapidminer' release="1" license="AGPL3" url="http://RapidMiner.com" vendor="RapidMiner GmbH" packager="Marcin Skirzynski" version='${rapidminer.shortversion}' destination='${release}' description="RapidMiner is the world-wide leading open-source data mining solution due to the combination of its leading-edge technologies and its functional range. Applications of RapidMiner cover a wide range of real-world data mining tasks." xmlns="antlib:org.freecompany.redline.ant">
 			<zipfileset prefix='/usr/share/rapidminer' dir="${release.files}">
 				<include name="**/*" />
 				<exclude name="scripts/*.bat" />
@@ -329,7 +329,7 @@
 	<taskdef name="bundleapp" classname="com.oracle.appbundler.AppBundlerTask" classpath="ant/appbundler-1.0.jar" />
 
 	<target name="release.makeOSXAppBundle" depends="version.get, createJar">
-		<bundleapp outputdirectory="${release}" name="RapidMiner" displayname="RapidMiner" identifier="com.rapid_i.RapidMiner" mainclassname="com.rapid_i.Launcher" shortversion="${rapidminer.shortversion}" copyright="${current.year} Rapid-I GmbH" icon="${resources}/com/rapidminer/resources/${bundle.osx.icon}">
+		<bundleapp outputdirectory="${release}" name="RapidMiner" displayname="RapidMiner" identifier="com.rapid_i.RapidMiner" mainclassname="com.rapid_i.Launcher" shortversion="${rapidminer.shortversion}" copyright="${current.year} RapidMiner GmbH" icon="${resources}/com/rapidminer/resources/${bundle.osx.icon}">
 
 			<!--The bundleapp task doesn't support classpathref so all 
 	             the run classpath entries must be stated here too. -->
@@ -626,8 +626,8 @@
 				<attribute name="Specification-Version" value="${rapidminer.longversion}" />
 				<attribute name="Implementation-Title" value="RapidMiner Tests" />
 				<attribute name="Implementation-Version" value="${rapidminer.longversion}-${platform}" />
-				<attribute name="Implementation-Vendor" value="Rapid-I" />
-				<attribute name="Specification-Vendor" value="Rapid-I" />
+				<attribute name="Implementation-Vendor" value="RapidMiner" />
+				<attribute name="Specification-Vendor" value="RapidMiner" />
 				<attribute name="Implementation-URL" value="http://www.rapidminer.com" />
 				<attribute name="Class-Path" value="rapidminer.jar ${manifest.classpath}" />
 			</manifest>
@@ -761,14 +761,22 @@
 			<arg value="${license}" />
 			<arg value="${src_test}" />
 		</java>
-	</target>
+		<java classname="LicensePrepender" classpath="${build}">
+			<arg value="${license}" />
+			<arg value="${src_agpl}" />
+		</java>
+		<java classname="LicensePrepender" classpath="${build}">
+			<arg value="${license}" />
+			<arg value="${src_launcher}" />
+		</java>
+					</target>
 	<target name="check.removeVersionTags" depends="build" description="Remove the version tags from the class files">
 		<java classname="RemoveClassVersionTags" classpath="${build}">
 			<arg value="${src}/com/rapidminer" />
 		</java>
 	</target>
 
-	<!-- Update .properties files from Rapid-I Pootle. You can change the language 
+	<!-- Update .properties files from RapidMiner Pootle. You can change the language 
 		variables in the property name "language" attribute. -->
 	<target name="update.properties" depends="init" description="Updating .properties files">
 		<echo message="Getting the following .properties files for languages: ${language}." />
@@ -821,7 +829,7 @@
 			<img src="http://sflogo.sourceforge.net/sflogo.php?group_id=114160&type=16" width="150" height="40" />
 		</a>]]></footer>
 	<bottom>
-		<![CDATA[<i>Copyright &#169; 2001-2012 by <a href="http://rapid-i.com" target="_blank">Rapid-I</a>
+		<![CDATA[<i>Copyright &#169; 2001-2012 by <a href="http://RapidMiner.com" target="_blank">RapidMiner</a>
 	</i>]]></bottom>
 <!-- Links are not supported here -->
 <tag name="rapidminer.todo" description="To do:" />

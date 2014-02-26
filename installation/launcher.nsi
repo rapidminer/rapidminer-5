@@ -2,7 +2,7 @@
 ;--------------
  
 ;You want to change the next four lines
-Name RapidMiner
+Name "RapidMiner Studio"
 Caption "RapidMiner Launcher"
 Icon "rapidminer_icon.ico"
 OutFile "../release/files/RapidMiner.exe"

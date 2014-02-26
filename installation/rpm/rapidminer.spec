@@ -5,8 +5,8 @@ Release: 1
 License: AGPL
 Group: Applications
 BuildRoot: %{_builddir}/%{name}-root
-URL: http://rapid-i.com/
-Vendor: Rapid-I GMBH
+URL: http://rapidminer.com/
+Vendor: RapidMiner GMBH
 Packager: skirzynski@rapid-i.com
 Prefix: /usr/share
 Source:%{name}-%{version}.tar.gz

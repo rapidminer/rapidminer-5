@@ -10,3 +10,4 @@ installation/version.nsi
 /dev
 /javadoc
 resources/com/rapidminer/resources/test/
+test/

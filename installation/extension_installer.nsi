@@ -12,8 +12,8 @@ RequestExecutionLevel admin
 !include "extension_settings.nsi"
 
 !define REGKEYOLD "SOFTWARE\$(^Name)"
-!define REGKEY "SOFTWARE\Rapid-i\RapidMiner 5\$(^Name)"
-!define COMPANY "Rapid-I GmbH"
+!define REGKEY "SOFTWARE\RapidMiner\RapidMiner 5\$(^Name)"
+!define COMPANY "RapidMiner GmbH"
 !define URL http://www.rapidminer.com
 
 # MUI defines

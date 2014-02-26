@@ -199,7 +199,7 @@ On Windows systems, RapidMiner automatically determines the maximum amount
 of free memory and uses about 90% of the free amount. This is sufficient in
 most cases. Please refer to the installation section of our web site for
 some details about adjusting the used amount of memory:
-<indent>http://rapid-i.com/
+<indent>http://rapidminer.com/
 This also applies for all other systems, where RapidMiner usually uses only
 128 Mb of main memory - even if your computer provides more memory.
 
@@ -235,7 +235,7 @@ basic concepts of RapidMiner.
 
 Our web site provides several online tours showing some of the
 basic features of RapidMiner:<lb>
-<indent>http://www.rapid-i.com
+<indent>http://www.rapidminer.com
 
 The standard data file format of RapidMiner is a set of data files together
 with a meta data description in a simple XML format (.aml file). The format

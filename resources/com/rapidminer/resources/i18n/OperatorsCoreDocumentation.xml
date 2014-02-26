@@ -8443,7 +8443,7 @@ Thomas Breuel, Faisal Shafait. The Learning Workshop, Cliff Lodge, Snowbird, Uta
       <help>Opens a file for processing by parsing operators. Even if this file points to a data file, like Excel or CSV, this
       operator returns an uninterpreted blob. You still need an operator for parsing the file like Read CSV or Read Excel.
       In most cases, you don't need an OpenFile operator to open such a file, you can simply use the corresponging read operator.
-      The main use is in combination with some loop or with in a RapidAnalytics service reacting to a POST request.</help>
+      The main use is in combination with some loop or with in a RapidMiner Service reacting to a POST request.</help>
       <key>open_file</key>
    </operator>
 

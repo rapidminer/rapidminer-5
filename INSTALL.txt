@@ -11,7 +11,7 @@ Basically, there are two different ways of installing RapidMiner:
 * Installation of a Java version (any platform)
 
 Both ways are described below. More information about the installation 
-of RapidMiner can be found at http://rapid-i.com
+of RapidMiner can be found at http://rapidminer.com
 
 
 Installation of the Windows executable
