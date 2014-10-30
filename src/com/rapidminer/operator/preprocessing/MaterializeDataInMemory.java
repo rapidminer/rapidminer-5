@@ -101,6 +101,8 @@ public class MaterializeDataInMemory extends AbstractDataProcessing {
 			if (role.isSpecial()) {
 				specialAttributes.put(newAttribute, role.getSpecialName());
 			}
+
+			newAttribute.getAnnotations().addAll(attribute.getAnnotations());
 		}
 
 		// fill table with data
