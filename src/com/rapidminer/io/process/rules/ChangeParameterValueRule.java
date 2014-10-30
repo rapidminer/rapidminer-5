@@ -44,7 +44,7 @@ public class ChangeParameterValueRule extends AbstractConditionedParseRule {
 
 	public ChangeParameterValueRule(String operatorTypeName, Element element) throws XMLException {
 		super(operatorTypeName, element);
-		assert (element.getTagName().equals("setParameter"));
+		assert (element.getTagName().equals("replaceParameterValue"));
 		NodeList children = element.getChildNodes();
 		for (int i = 0; i < children.getLength(); i++) {
 			Node child = children.item(i);
