@@ -77,8 +77,7 @@ public abstract class AbstractInputPort extends AbstractPort implements InputPor
 
 	@Override
 	public void receiveMD(MetaData metaData) {
-		//Seems to be violated by many core operators, so commenting out
-		//assert (this.metaData != null);
+		this.metaData = metaData;
 		informListenersOfChange(metaData);
 	}
 
