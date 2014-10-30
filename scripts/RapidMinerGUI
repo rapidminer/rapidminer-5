@@ -167,7 +167,7 @@ do
 	if [ $NUMBER_OF_CORES -gt 1 ]
 	then
 		echo Starting in multi-core mode
-		$JAVA $ADDITIONAL_OPTIONS \
+		"$JAVA" $ADDITIONAL_OPTIONS \
 	    -Xmx${MAX_JAVA_MEMORY}m \
 	    -XX:MaxPermSize=128m \
 		-cp ${CLASSPATH} \
@@ -177,7 +177,7 @@ do
 		com.rapid_i.Launcher "$@"
 	else
 		echo Starting in single-core mode
-		$JAVA \
+		"$JAVA" \
 	    -Xmx${MAX_JAVA_MEMORY}m \
 	    -XX:MaxPermSize=128m\
 		-cp ${CLASSPATH} \
